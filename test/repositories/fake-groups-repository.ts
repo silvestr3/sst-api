@@ -12,6 +12,18 @@ export class FakeGroupsRepository implements GroupsRepository {
     return groups;
   }
 
+  async findById(id: string): Promise<Group | null> {
+    const group = this.items.find((item) => item.id.toString() === id);
+
+    return group ?? null;
+  }
+
+  async delete(group: Group): Promise<void> {
+    const index = this.items.findIndex((item) => group.id.equals(item.id));
+
+    this.items.splice(index, 1);
+  }
+
   async create(group: Group): Promise<void> {
     this.items.push(group);
   }
