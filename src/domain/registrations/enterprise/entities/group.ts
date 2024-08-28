@@ -5,7 +5,7 @@ export interface GroupProps {
   subscriptionId: UniqueEntityID;
   name: string;
   description: string;
-  logoUrl: string;
+  logoUrl?: string;
   isActive: boolean;
 }
 
