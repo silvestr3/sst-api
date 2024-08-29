@@ -1,12 +1,12 @@
 import { FakeGroupsRepository } from 'test/repositories/fake-groups-repository';
 import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscriptions-repository';
 import { makeSubscription } from 'test/factories/make-subscription';
-import { CreateEmployerUseCase } from './create-employer';
+import { CreateEmployerUseCase } from '../create-employer';
 import { FakeEmployersRepository } from 'test/repositories/fake-employers-repository';
 import { FakeBranchesRepository } from 'test/repositories/fake-branches-repository';
 import { FakeDepartmentsRepository } from 'test/repositories/fake-departments-repository';
 import { makeGroup } from 'test/factories/make-group';
-import { MissingInformationError } from './errors/missing-information-error';
+import { MissingInformationError } from '../errors/missing-information-error';
 import { FakeAddressesRepository } from 'test/repositories/fake-addresses-repository';
 
 describe('Create employer tests', () => {

@@ -1,5 +1,5 @@
 import { FakeGroupsRepository } from 'test/repositories/fake-groups-repository';
-import { CreateGroupUseCase } from './create-group';
+import { CreateGroupUseCase } from '../create-group';
 import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscriptions-repository';
 import { makeSubscription } from 'test/factories/make-subscription';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';

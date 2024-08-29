@@ -1,13 +1,13 @@
 import { FakeGroupsRepository } from 'test/repositories/fake-groups-repository';
 import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscriptions-repository';
 import { makeSubscription } from 'test/factories/make-subscription';
-import { DeleteGroupUseCase } from './delete-group';
+import { DeleteGroupUseCase } from '../delete-group';
 import { makeGroup } from 'test/factories/make-group';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { FakeEmployersRepository } from 'test/repositories/fake-employers-repository';
 import { makeEmployer } from 'test/factories/make-employer';
-import { GroupNotEmptyError } from './errors/group-not-empty-error';
+import { GroupNotEmptyError } from '../errors/group-not-empty-error';
 
 describe('Delete group tests', () => {
   let groupsRepository: FakeGroupsRepository;

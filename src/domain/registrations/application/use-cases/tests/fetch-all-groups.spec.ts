@@ -3,7 +3,7 @@ import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscription
 import { makeSubscription } from 'test/factories/make-subscription';
 import { makeGroup } from 'test/factories/make-group';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { FetchAllGroupsUseCase } from './fetch-all-groups';
+import { FetchAllGroupsUseCase } from '../fetch-all-groups';
 
 describe('Fetch all groups tests', () => {
   let groupsRepository: FakeGroupsRepository;

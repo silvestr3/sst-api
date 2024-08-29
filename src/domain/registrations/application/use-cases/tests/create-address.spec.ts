@@ -1,6 +1,6 @@
 import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscriptions-repository';
 import { makeSubscription } from 'test/factories/make-subscription';
-import { CreateAddressUseCase } from './create-address';
+import { CreateAddressUseCase } from '../create-address';
 import { FakeAddressesRepository } from 'test/repositories/fake-addresses-repository';
 
 describe('Create address tests', () => {
