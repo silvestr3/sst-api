@@ -22,7 +22,7 @@ export function makeEmployer(
       cpf: faker.string.numeric({ length: 11 }),
       riskLevel: faker.number.int({ min: 1, max: 5 }),
       isActive: true,
-      responsibleDoctor: new UniqueEntityID(randomUUID()),
+      responsibleDoctorId: new UniqueEntityID(randomUUID()),
       ...override,
     },
     id,

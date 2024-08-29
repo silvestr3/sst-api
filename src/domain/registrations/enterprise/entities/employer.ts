@@ -12,7 +12,7 @@ export interface EmployerProps {
   cnae: string;
   activity: string;
   riskLevel: number;
-  responsibleDoctor: UniqueEntityID;
+  responsibleDoctorId: UniqueEntityID;
   isActive: boolean;
   addressId?: UniqueEntityID;
 }
@@ -94,12 +94,12 @@ export class Employer extends Entity<EmployerProps> {
     this.props.riskLevel = riskLevel;
   }
 
-  get responsibleDoctor() {
-    return this.props.responsibleDoctor;
+  get responsibleDoctorId() {
+    return this.props.responsibleDoctorId;
   }
 
-  set responsibleDoctor(responsibleDoctor: UniqueEntityID) {
-    this.props.responsibleDoctor = responsibleDoctor;
+  set responsibleDoctorId(responsibleDoctorId: UniqueEntityID) {
+    this.props.responsibleDoctorId = responsibleDoctorId;
   }
 
   get isActive() {
