@@ -1,9 +1,10 @@
 import { Either, left, right } from '@/core/either';
-import { Group } from '../../enterprise/entities/group';
 import { GroupsRepository } from '../repositories/groups-repository';
 import { SubscriptionsRepository } from '../repositories/subscriptions-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { EmployersRepository } from '../repositories/employers-repository';
+import { GroupNotEmptyError } from './errors/group-not-empty-error';
 
 interface DeleteGroupParams {
   subscriptionId: string;
@@ -12,7 +13,7 @@ interface DeleteGroupParams {
 }
 
 type DeleteGroupResponse = Either<
-  NotAllowedError | ResourceNotFoundError,
+  NotAllowedError | ResourceNotFoundError | GroupNotEmptyError,
   null
 >;
 
@@ -20,6 +21,7 @@ export class DeleteGroupUseCase {
   constructor(
     private groupsRepository: GroupsRepository,
     private subscriptionsRepository: SubscriptionsRepository,
+    private employersRepository: EmployersRepository,
   ) {}
 
   async execute({
@@ -45,6 +47,14 @@ export class DeleteGroupUseCase {
 
     if (group.subscriptionId !== subscription.id) {
       return left(new NotAllowedError());
+    }
+
+    const employersOnGroup = await this.employersRepository.fetchByGroupId(
+      group.id.toString(),
+    );
+
+    if (employersOnGroup.length > 0) {
+      return left(new GroupNotEmptyError());
     }
 
     await this.groupsRepository.delete(group);
