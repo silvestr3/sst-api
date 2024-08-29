@@ -11,6 +11,9 @@ import { Branch } from '../../enterprise/entities/branch';
 import { BranchesRepository } from '../repositories/branches-repository';
 import { DepartmentesRepository } from '../repositories/departments-repository';
 import { Department } from '../../enterprise/entities/department';
+import { Address } from '../../enterprise/entities/address';
+import { AddressesRepository } from '../repositories/addresses-repository';
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 
 interface CreateEmployerParams {
   subscriptionId: string;
@@ -30,7 +33,7 @@ interface CreateEmployerParams {
 }
 
 type CreateEmployerResponse = Either<
-  NotAllowedError | MissingInformationError,
+  NotAllowedError | MissingInformationError | ResourceNotFoundError,
   { employer: Employer }
 >;
 
@@ -41,6 +44,7 @@ export class CreateEmployerUseCase {
     private employersRepository: EmployersRepository,
     private branchesRepository: BranchesRepository,
     private departmentsRepository: DepartmentesRepository,
+    private addressesRepository: AddressesRepository,
   ) {}
 
   async execute({
@@ -81,6 +85,16 @@ export class CreateEmployerUseCase {
       return left(new MissingInformationError('cnpj'));
     }
 
+    let address: Address;
+
+    if (addressId) {
+      address = await this.addressesRepository.findById(addressId);
+
+      if (!address) {
+        return left(new ResourceNotFoundError());
+      }
+    }
+
     const employer = Employer.create({
       subscriptionId: subscription.id,
       groupId: group.id,
@@ -94,7 +108,7 @@ export class CreateEmployerUseCase {
       riskLevel,
       responsibleDoctorId: new UniqueEntityID(responsibleDoctorId),
       isActive,
-      addressId: new UniqueEntityID(addressId),
+      addressId: address ? address.id : null,
     });
 
     await this.employersRepository.create(employer);

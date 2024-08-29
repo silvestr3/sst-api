@@ -13,4 +13,10 @@ export class FakeAddressesRepository implements AddressesRepository {
 
     this.items[index] = address;
   }
+
+  async findById(id: string): Promise<Address | null> {
+    const address = this.items.find((item) => item.id.toString() === id);
+
+    return address ?? null;
+  }
 }

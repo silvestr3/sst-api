@@ -7,6 +7,7 @@ import { FakeBranchesRepository } from 'test/repositories/fake-branches-reposito
 import { FakeDepartmentsRepository } from 'test/repositories/fake-departments-repository';
 import { makeGroup } from 'test/factories/make-group';
 import { MissingInformationError } from './errors/missing-information-error';
+import { FakeAddressesRepository } from 'test/repositories/fake-addresses-repository';
 
 describe('Create employer tests', () => {
   let groupsRepository: FakeGroupsRepository;
@@ -15,6 +16,7 @@ describe('Create employer tests', () => {
   let branchesRepository: FakeBranchesRepository;
   let departmentsRepository: FakeDepartmentsRepository;
   let sut: CreateEmployerUseCase;
+  let addressesRepository: FakeAddressesRepository;
 
   beforeEach(() => {
     groupsRepository = new FakeGroupsRepository();
@@ -22,6 +24,7 @@ describe('Create employer tests', () => {
     employersRepository = new FakeEmployersRepository();
     branchesRepository = new FakeBranchesRepository();
     departmentsRepository = new FakeDepartmentsRepository();
+    addressesRepository = new FakeAddressesRepository();
 
     sut = new CreateEmployerUseCase(
       groupsRepository,
@@ -29,6 +32,7 @@ describe('Create employer tests', () => {
       employersRepository,
       branchesRepository,
       departmentsRepository,
+      addressesRepository,
     );
   });
 

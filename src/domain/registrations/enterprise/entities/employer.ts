@@ -14,7 +14,7 @@ export interface EmployerProps {
   riskLevel: number;
   responsibleDoctorId: UniqueEntityID;
   isActive: boolean;
-  addressId?: UniqueEntityID;
+  addressId?: UniqueEntityID | null;
 }
 
 export class Employer extends Entity<EmployerProps> {
