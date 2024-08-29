@@ -18,7 +18,7 @@ describe('Create address tests', () => {
     );
   });
 
-  it('Should be able to create a new group', async () => {
+  it('Should be able to create a new address', async () => {
     const subscription = makeSubscription();
     subscriptionsRepository.items.push(subscription);
 
