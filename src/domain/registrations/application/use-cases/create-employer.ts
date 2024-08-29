@@ -14,6 +14,7 @@ import { Department } from '../../enterprise/entities/department';
 import { Address } from '../../enterprise/entities/address';
 import { AddressesRepository } from '../repositories/addresses-repository';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { validateSubscription } from './util/validate-subscription';
 
 interface CreateEmployerParams {
   subscriptionId: string;
@@ -63,13 +64,13 @@ export class CreateEmployerUseCase {
     isActive = true,
     addressId,
   }: CreateEmployerParams): Promise<CreateEmployerResponse> {
-    const subscription =
-      await this.subscriptionsRepository.findById(subscriptionId);
+    const subscription = await validateSubscription({
+      executorId,
+      subscriptionId,
+      subscriptionsRepository: this.subscriptionsRepository,
+    });
 
-    if (
-      !subscription ||
-      subscription.administratorId.toString() !== executorId
-    ) {
+    if (!subscription) {
       return left(new NotAllowedError());
     }
 

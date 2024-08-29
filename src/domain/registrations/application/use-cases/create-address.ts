@@ -3,6 +3,7 @@ import { SubscriptionsRepository } from '../repositories/subscriptions-repositor
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { Address } from '../../enterprise/entities/address';
 import { AddressesRepository } from '../repositories/addresses-repository';
+import { validateSubscription } from './util/validate-subscription';
 
 interface CreateAddressParams {
   subscriptionId: string;
@@ -35,13 +36,13 @@ export class CreateAddressUseCase {
     city,
     state,
   }: CreateAddressParams): Promise<CreateAddressResponse> {
-    const subscription =
-      await this.subscriptionsRepository.findById(subscriptionId);
+    const subscription = await validateSubscription({
+      executorId,
+      subscriptionId,
+      subscriptionsRepository: this.subscriptionsRepository,
+    });
 
-    if (
-      !subscription ||
-      subscription.administratorId.toString() !== executorId
-    ) {
+    if (!subscription) {
       return left(new NotAllowedError());
     }
 

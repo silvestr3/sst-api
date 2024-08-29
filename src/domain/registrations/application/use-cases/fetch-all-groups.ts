@@ -3,6 +3,7 @@ import { Group } from '../../enterprise/entities/group';
 import { GroupsRepository } from '../repositories/groups-repository';
 import { SubscriptionsRepository } from '../repositories/subscriptions-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { validateSubscription } from './util/validate-subscription';
 
 interface FetchAllGroupsParams {
   subscriptionId: string;
@@ -21,13 +22,13 @@ export class FetchAllGroupsUseCase {
     subscriptionId,
     executorId,
   }: FetchAllGroupsParams): Promise<FetchAllGroupsResponse> {
-    const subscription =
-      await this.subscriptionsRepository.findById(subscriptionId);
+    const subscription = await validateSubscription({
+      executorId,
+      subscriptionId,
+      subscriptionsRepository: this.subscriptionsRepository,
+    });
 
-    if (
-      !subscription ||
-      subscription.administratorId.toString() !== executorId
-    ) {
+    if (!subscription) {
       return left(new NotAllowedError());
     }
 
