@@ -6,7 +6,6 @@ import { FakeEmployersRepository } from 'test/repositories/fake-employers-reposi
 import { FakeBranchesRepository } from 'test/repositories/fake-branches-repository';
 import { FakeDepartmentsRepository } from 'test/repositories/fake-departments-repository';
 import { makeGroup } from 'test/factories/make-group';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { MissingInformationError } from './errors/missing-information-error';
 
 describe('Create employer tests', () => {
