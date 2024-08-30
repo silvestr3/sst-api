@@ -6,34 +6,33 @@ import { DepartmentesRepository } from '../repositories/departments-repository';
 import { Department } from '../../enterprise/entities/department';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
+import { AddressesRepository } from '../repositories/addresses-repository';
 
-interface CreateDepartmentParams {
+interface LinkAddressToEmployerParams {
   subscriptionId: string;
   executorId: string;
   employerId: string;
-  name: string;
-  description: string;
+  addressId: string;
 }
 
-type CreateDepartmentResponse = Either<
+type LinkAddressToEmployerResponse = Either<
   NotAllowedError | ResourceNotFoundError,
-  { department: Department }
+  null
 >;
 
-export class CreateDepartmentUseCase {
+export class LinkAddressToEmployerUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
     private employersRepository: EmployersRepository,
-    private departmentsRepository: DepartmentesRepository,
+    private addressesRepository: AddressesRepository,
   ) {}
 
   async execute({
     subscriptionId,
     executorId,
     employerId,
-    name,
-    description,
-  }: CreateDepartmentParams): Promise<CreateDepartmentResponse> {
+    addressId,
+  }: LinkAddressToEmployerParams): Promise<LinkAddressToEmployerResponse> {
     const subscription = await validateSubscription({
       executorId,
       subscriptionId,
@@ -54,15 +53,19 @@ export class CreateDepartmentUseCase {
       return left(new NotAllowedError());
     }
 
-    const department = Department.create({
-      subscriptionId: subscription.id,
-      employerId: employer.id,
-      name,
-      description,
-    });
+    const address = await this.addressesRepository.findById(addressId);
 
-    await this.departmentsRepository.create(department);
+    if (!address) {
+      return left(new ResourceNotFoundError());
+    }
 
-    return right({ department });
+    if (!address.subscriptionId.equals(subscription.id)) {
+      return left(new NotAllowedError());
+    }
+
+    employer.addressId = address.id;
+    await this.employersRepository.save(employer);
+
+    return right(null);
   }
 }
