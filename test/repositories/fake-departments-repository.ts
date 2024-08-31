@@ -8,6 +8,12 @@ export class FakeDepartmentsRepository implements DepartmentesRepository {
     this.items.push(department);
   }
 
+  async save(department: Department): Promise<void> {
+    const index = this.items.findIndex((item) => item.id.equals(department.id));
+
+    this.items[index] = department;
+  }
+
   async findById(id: string): Promise<Department | null> {
     const department = this.items.find((item) => item.id.toString() === id);
 
