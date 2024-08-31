@@ -9,7 +9,7 @@ describe('CPF value object tests', () => {
     expect(isValid).toBeInstanceOf(Cpf);
   });
 
-  it('Should return null to invalid CPF number', () => {
+  it('Should return null to invalid CPF length', () => {
     const cpf = '123';
 
     const isValid = Cpf.validateAndCreate(cpf);
@@ -17,7 +17,7 @@ describe('CPF value object tests', () => {
     expect(isValid).toBeNull();
   });
 
-  it('Should return null to invalid CPF lenght', () => {
+  it('Should return null to invalid CPF number', () => {
     const cpf = '12387635651';
 
     const isValid = Cpf.validateAndCreate(cpf);
