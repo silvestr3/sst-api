@@ -19,4 +19,12 @@ export class FakeDepartmentsRepository implements DepartmentesRepository {
 
     return department ?? null;
   }
+
+  async fetchByEmployerId(id: string): Promise<Department[]> {
+    const departments = this.items.filter(
+      (item) => item.employerId.toString() === id,
+    );
+
+    return departments;
+  }
 }
