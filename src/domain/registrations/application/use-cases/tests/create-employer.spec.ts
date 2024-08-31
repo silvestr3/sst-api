@@ -75,7 +75,7 @@ describe('Create employer tests', () => {
       expect.objectContaining({
         employerId: employer.id,
         subscriptionId: subscription.id,
-        name: 'SEDE',
+        name: 'Sede',
       }),
     );
     expect(departmentsRepository.items[0]).toEqual(

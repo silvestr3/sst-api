@@ -5,6 +5,7 @@ import { Employer } from '../../enterprise/entities/employer';
 import { EmployersRepository } from '../repositories/employers-repository';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
+import { validateResourceOwnership } from './util/validate-resource-ownership';
 
 interface InactivateEmployerParams {
   subscriptionId: string;
@@ -38,15 +39,17 @@ export class InactivateEmployerUseCase {
       return left(new NotAllowedError());
     }
 
-    const employer = await this.employersRepository.findById(employerId);
+    const getEmployer = await validateResourceOwnership<Employer>({
+      repository: this.employersRepository,
+      resourceId: employerId,
+      subscriptionId: subscription.id,
+    });
 
-    if (!employer) {
-      return left(new ResourceNotFoundError());
+    if (getEmployer.isLeft()) {
+      return left(getEmployer.value);
     }
 
-    if (!employer.subscriptionId.equals(subscription.id)) {
-      return left(new NotAllowedError());
-    }
+    const employer = getEmployer.value;
 
     employer.isActive = false;
 

@@ -1,6 +1,7 @@
+import { Repository } from '@/core/repositories/repository';
 import { Group } from '../../enterprise/entities/group';
 
-export abstract class GroupsRepository {
+export abstract class GroupsRepository extends Repository<Group> {
   abstract create(group: Group): Promise<void>;
   abstract save(group: Group): Promise<void>;
   abstract delete(group: Group): Promise<void>;

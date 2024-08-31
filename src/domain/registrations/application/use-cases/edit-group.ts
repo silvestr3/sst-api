@@ -5,6 +5,7 @@ import { SubscriptionsRepository } from '../repositories/subscriptions-repositor
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { validateSubscription } from './util/validate-subscription';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { validateResourceOwnership } from './util/validate-resource-ownership';
 
 interface EditGroupParams {
   subscriptionId: string;
@@ -44,15 +45,17 @@ export class EditGroupUseCase {
       return left(new NotAllowedError());
     }
 
-    const group = await this.groupsRepository.findById(groupId);
+    const getGroup = await validateResourceOwnership<Group>({
+      repository: this.groupsRepository,
+      resourceId: groupId,
+      subscriptionId: subscription.id,
+    });
 
-    if (!group) {
-      return left(new ResourceNotFoundError());
+    if (getGroup.isLeft()) {
+      return left(getGroup.value);
     }
 
-    if (!group.subscriptionId.equals(subscription.id)) {
-      return left(new NotAllowedError());
-    }
+    const group = getGroup.value;
 
     group.name = name;
     group.description = description;

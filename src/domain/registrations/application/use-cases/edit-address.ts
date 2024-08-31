@@ -5,6 +5,7 @@ import { Address } from '../../enterprise/entities/address';
 import { AddressesRepository } from '../repositories/addresses-repository';
 import { validateSubscription } from './util/validate-subscription';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { validateResourceOwnership } from './util/validate-resource-ownership';
 
 interface EditAddressParams {
   subscriptionId: string;
@@ -49,15 +50,17 @@ export class EditAddressUseCase {
       return left(new NotAllowedError());
     }
 
-    const address = await this.addressesRepository.findById(addressId);
+    const getAddress = await validateResourceOwnership<Address>({
+      repository: this.addressesRepository,
+      resourceId: addressId,
+      subscriptionId: subscription.id,
+    });
 
-    if (!address) {
-      return left(new ResourceNotFoundError());
+    if (getAddress.isLeft()) {
+      return left(getAddress.value);
     }
 
-    if (!address.subscriptionId.equals(subscription.id)) {
-      return left(new NotAllowedError());
-    }
+    const address = getAddress.value;
 
     address.cep = cep;
     address.street = street;

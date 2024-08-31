@@ -7,6 +7,7 @@ import { validateSubscription } from './util/validate-subscription';
 import { EmployersRepository } from '../repositories/employers-repository';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { Employer } from '../../enterprise/entities/employer';
+import { validateResourceOwnership } from './util/validate-resource-ownership';
 
 interface FetchEmployersByGroupIdParams {
   subscriptionId: string;
@@ -41,15 +42,17 @@ export class FetchEmployersByGroupIdUseCase {
       return left(new NotAllowedError());
     }
 
-    const group = await this.groupsRepository.findById(groupId);
+    const getGroup = await validateResourceOwnership<Group>({
+      repository: this.groupsRepository,
+      resourceId: groupId,
+      subscriptionId: subscription.id,
+    });
 
-    if (!group) {
-      return left(new ResourceNotFoundError());
+    if (getGroup.isLeft()) {
+      return left(getGroup.value);
     }
 
-    if (!group.subscriptionId.equals(subscription.id)) {
-      return left(new NotAllowedError());
-    }
+    const group = getGroup.value;
 
     const employers = await this.employersRepository.fetchByGroupId(
       group.id.toString(),

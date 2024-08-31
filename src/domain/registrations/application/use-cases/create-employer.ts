@@ -15,6 +15,7 @@ import { Address } from '../../enterprise/entities/address';
 import { AddressesRepository } from '../repositories/addresses-repository';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
+import { validateResourceOwnership } from './util/validate-resource-ownership';
 
 interface CreateEmployerParams {
   subscriptionId: string;
@@ -74,11 +75,17 @@ export class CreateEmployerUseCase {
       return left(new NotAllowedError());
     }
 
-    const group = await this.groupsRepository.findById(groupId);
+    const getGroup = await validateResourceOwnership<Group>({
+      repository: this.groupsRepository,
+      resourceId: groupId,
+      subscriptionId: subscription.id,
+    });
 
-    if (!group || !group.subscriptionId.equals(subscription.id)) {
-      return left(new NotAllowedError());
+    if (getGroup.isLeft()) {
+      return left(getGroup.value);
     }
+
+    const group = getGroup.value;
 
     if (eSocialEnrollmentType === 'CPF' && !cpf) {
       return left(new MissingInformationError('cpf'));
@@ -89,11 +96,17 @@ export class CreateEmployerUseCase {
     let address: Address;
 
     if (addressId) {
-      address = await this.addressesRepository.findById(addressId);
+      const getAddress = await validateResourceOwnership<Address>({
+        repository: this.addressesRepository,
+        resourceId: addressId,
+        subscriptionId: subscription.id,
+      });
 
-      if (!address) {
-        return left(new ResourceNotFoundError());
+      if (getAddress.isLeft()) {
+        return left(getAddress.value);
       }
+
+      address = getAddress.value;
     }
 
     const employer = Employer.create({
@@ -118,7 +131,7 @@ export class CreateEmployerUseCase {
     const branch = Branch.create({
       subscriptionId: subscription.id,
       employerId: employer.id,
-      name: 'SEDE',
+      name: 'Sede',
     });
 
     await this.branchesRepository.create(branch);

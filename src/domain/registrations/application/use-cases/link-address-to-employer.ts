@@ -7,6 +7,9 @@ import { Department } from '../../enterprise/entities/department';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
 import { AddressesRepository } from '../repositories/addresses-repository';
+import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Address } from '../../enterprise/entities/address';
+import { Employer } from '../../enterprise/entities/employer';
 
 interface LinkAddressToEmployerParams {
   subscriptionId: string;
@@ -43,25 +46,28 @@ export class LinkAddressToEmployerUseCase {
       return left(new NotAllowedError());
     }
 
-    const employer = await this.employersRepository.findById(employerId);
+    const getEmployer = await validateResourceOwnership<Employer>({
+      repository: this.employersRepository,
+      resourceId: employerId,
+      subscriptionId: subscription.id,
+    });
 
-    if (!employer) {
-      return left(new ResourceNotFoundError());
+    if (getEmployer.isLeft()) {
+      return left(getEmployer.value);
     }
 
-    if (!employer.subscriptionId.equals(subscription.id)) {
-      return left(new NotAllowedError());
+    const getAddress = await validateResourceOwnership<Address>({
+      repository: this.addressesRepository,
+      resourceId: addressId,
+      subscriptionId: subscription.id,
+    });
+
+    if (getAddress.isLeft()) {
+      return left(getAddress.value);
     }
 
-    const address = await this.addressesRepository.findById(addressId);
-
-    if (!address) {
-      return left(new ResourceNotFoundError());
-    }
-
-    if (!address.subscriptionId.equals(subscription.id)) {
-      return left(new NotAllowedError());
-    }
+    const address = getAddress.value;
+    const employer = getEmployer.value;
 
     employer.addressId = address.id;
     await this.employersRepository.save(employer);

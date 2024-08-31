@@ -6,6 +6,8 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { EmployersRepository } from '../repositories/employers-repository';
 import { GroupNotEmptyError } from './errors/group-not-empty-error';
 import { validateSubscription } from './util/validate-subscription';
+import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Group } from '../../enterprise/entities/group';
 
 interface DeleteGroupParams {
   subscriptionId: string;
@@ -40,15 +42,17 @@ export class DeleteGroupUseCase {
       return left(new NotAllowedError());
     }
 
-    const group = await this.groupsRepository.findById(groupId);
+    const getGroup = await validateResourceOwnership<Group>({
+      repository: this.groupsRepository,
+      resourceId: groupId,
+      subscriptionId: subscription.id,
+    });
 
-    if (!group) {
-      return left(new ResourceNotFoundError());
+    if (getGroup.isLeft()) {
+      return left(getGroup.value);
     }
 
-    if (group.subscriptionId !== subscription.id) {
-      return left(new NotAllowedError());
-    }
+    const group = getGroup.value;
 
     const employersOnGroup = await this.employersRepository.fetchByGroupId(
       group.id.toString(),
