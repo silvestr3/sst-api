@@ -29,7 +29,6 @@ interface CreateEmployerParams {
   cnae: string;
   activity: string;
   riskLevel: number;
-  responsibleDoctorId: string;
   isActive?: boolean;
   addressId?: string;
 }
@@ -61,7 +60,6 @@ export class CreateEmployerUseCase {
     cnae,
     activity,
     riskLevel,
-    responsibleDoctorId,
     isActive = true,
     addressId,
   }: CreateEmployerParams): Promise<CreateEmployerResponse> {
@@ -120,7 +118,6 @@ export class CreateEmployerUseCase {
       cnae,
       activity,
       riskLevel,
-      responsibleDoctorId: new UniqueEntityID(responsibleDoctorId),
       isActive,
       addressId: address ? address.id : null,
     });

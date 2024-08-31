@@ -12,7 +12,7 @@ export interface EmployerProps {
   cnae: string;
   activity: string;
   riskLevel: number;
-  responsibleDoctorId: UniqueEntityID;
+  responsibleDoctorId?: UniqueEntityID | null;
   isActive: boolean;
   addressId?: UniqueEntityID | null;
 }
