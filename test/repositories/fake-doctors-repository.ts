@@ -13,4 +13,10 @@ export class FakeDoctorsRepository implements DoctorsRepository {
   async create(doctor: Doctor): Promise<void> {
     this.items.push(doctor);
   }
+
+  async save(doctor: Doctor): Promise<void> {
+    const index = this.items.findIndex((item) => item.id.equals(doctor.id));
+
+    this.items[index] = doctor;
+  }
 }
