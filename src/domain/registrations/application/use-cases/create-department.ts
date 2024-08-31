@@ -6,6 +6,8 @@ import { DepartmentesRepository } from '../repositories/departments-repository';
 import { Department } from '../../enterprise/entities/department';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
+import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Employer } from '../../enterprise/entities/employer';
 
 interface CreateDepartmentParams {
   subscriptionId: string;
@@ -44,15 +46,17 @@ export class CreateDepartmentUseCase {
       return left(new NotAllowedError());
     }
 
-    const employer = await this.employersRepository.findById(employerId);
+    const getEmployer = await validateResourceOwnership<Employer>({
+      repository: this.employersRepository,
+      resourceId: employerId,
+      subscriptionId: subscription.id,
+    });
 
-    if (!employer) {
-      return left(new ResourceNotFoundError());
+    if (getEmployer.isLeft()) {
+      return left(getEmployer.value);
     }
 
-    if (!employer.subscriptionId.equals(subscription.id)) {
-      return left(new NotAllowedError());
-    }
+    const employer = getEmployer.value;
 
     const department = Department.create({
       subscriptionId: subscription.id,
