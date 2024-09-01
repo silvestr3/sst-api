@@ -1,11 +1,12 @@
 import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Cpf } from './value-objects/cpf';
 
 export interface EmployerProps {
   subscriptionId: UniqueEntityID;
   groupId: UniqueEntityID;
   eSocialEnrollmentType: 'CPF' | 'CNPJ';
-  cpf?: string | null;
+  cpf?: Cpf | null;
   cnpj?: string | null;
   razaoSocial: string;
   nomeFantasia: string;
@@ -42,7 +43,7 @@ export class Employer extends Entity<EmployerProps> {
     return this.props.cpf;
   }
 
-  set cpf(cpf: string) {
+  set cpf(cpf: Cpf) {
     this.props.cpf = cpf;
   }
 

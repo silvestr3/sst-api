@@ -16,6 +16,8 @@ import { AddressesRepository } from '../repositories/addresses-repository';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Cpf } from '../../enterprise/entities/value-objects/cpf';
+import { InvalidInformationError } from './errors/invalid-information-error';
 
 interface CreateEmployerParams {
   subscriptionId: string;
@@ -34,7 +36,10 @@ interface CreateEmployerParams {
 }
 
 type CreateEmployerResponse = Either<
-  NotAllowedError | MissingInformationError | ResourceNotFoundError,
+  | NotAllowedError
+  | MissingInformationError
+  | InvalidInformationError
+  | ResourceNotFoundError,
   { employer: Employer }
 >;
 
@@ -85,8 +90,18 @@ export class CreateEmployerUseCase {
 
     const group = getGroup.value;
 
-    if (eSocialEnrollmentType === 'CPF' && !cpf) {
-      return left(new MissingInformationError('cpf'));
+    let validatedCpf: Cpf;
+
+    if (eSocialEnrollmentType === 'CPF') {
+      if (!cpf) {
+        return left(new MissingInformationError('cpf'));
+      }
+
+      validatedCpf = Cpf.validateAndCreate(cpf);
+
+      if (!validatedCpf) {
+        return left(new InvalidInformationError('cpf'));
+      }
     } else if (eSocialEnrollmentType === 'CNPJ' && !cnpj) {
       return left(new MissingInformationError('cnpj'));
     }
@@ -111,7 +126,7 @@ export class CreateEmployerUseCase {
       subscriptionId: subscription.id,
       groupId: group.id,
       eSocialEnrollmentType,
-      cpf,
+      cpf: validatedCpf,
       cnpj,
       razaoSocial,
       nomeFantasia,

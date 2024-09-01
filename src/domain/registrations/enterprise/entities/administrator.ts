@@ -1,12 +1,13 @@
 import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Cpf } from './value-objects/cpf';
 
 export interface AdministratorProps {
   subscriptionId: UniqueEntityID;
   email: string;
   password: string;
   name: string;
-  cpf: string;
+  cpf: Cpf;
   phone?: string;
   profilePictureUrl: string;
 }
@@ -48,7 +49,7 @@ export class Administrator extends Entity<AdministratorProps> {
     return this.props.cpf;
   }
 
-  set cpf(cpf: string) {
+  set cpf(cpf: Cpf) {
     this.props.cpf = cpf;
   }
 

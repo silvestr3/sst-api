@@ -3,6 +3,7 @@ import {
   Employer,
   EmployerProps,
 } from '@/domain/registrations/enterprise/entities/employer';
+import { Cpf } from '@/domain/registrations/enterprise/entities/value-objects/cpf';
 import { faker } from '@faker-js/faker';
 import { randomUUID } from 'crypto';
 
@@ -19,7 +20,7 @@ export function makeEmployer(
       cnae: faker.string.numeric({ length: 5 }),
       activity: faker.lorem.sentence(),
       eSocialEnrollmentType: 'CPF',
-      cpf: faker.string.numeric({ length: 11 }),
+      cpf: Cpf.validateAndCreate('06185218011'),
       riskLevel: faker.number.int({ min: 1, max: 5 }),
       isActive: true,
       responsibleDoctorId: new UniqueEntityID(randomUUID()),

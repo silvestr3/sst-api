@@ -8,6 +8,7 @@ import { FakeDepartmentsRepository } from 'test/repositories/fake-departments-re
 import { makeGroup } from 'test/factories/make-group';
 import { MissingInformationError } from '../errors/missing-information-error';
 import { FakeAddressesRepository } from 'test/repositories/fake-addresses-repository';
+import { InvalidInformationError } from '../errors/invalid-information-error';
 
 describe('Create employer tests', () => {
   let groupsRepository: FakeGroupsRepository;
@@ -55,8 +56,7 @@ describe('Create employer tests', () => {
       activity: 'Production of unit tests',
       riskLevel: 1,
       eSocialEnrollmentType: 'CPF',
-      cpf: '12312312312',
-      responsibleDoctorId: 'doctor-id',
+      cpf: '06185218011',
     });
 
     //@ts-ignore
@@ -108,10 +108,35 @@ describe('Create employer tests', () => {
       riskLevel: 1,
       eSocialEnrollmentType: 'CPF',
       cnpj: '12312312312',
-      responsibleDoctorId: 'doctor-id',
     });
 
     expect(result.isLeft()).toBeTruthy();
     expect(result.value).toBeInstanceOf(MissingInformationError);
+  });
+
+  it('Should not be able to create employer with invalid CPF number', async () => {
+    const subscription = makeSubscription();
+    subscriptionsRepository.items.push(subscription);
+
+    const group = makeGroup({
+      subscriptionId: subscription.id,
+    });
+    groupsRepository.items.push(group);
+
+    const result = await sut.execute({
+      subscriptionId: subscription.id.toString(),
+      groupId: group.id.toString(),
+      executorId: subscription.administratorId.toString(),
+      razaoSocial: 'Test employer',
+      nomeFantasia: 'Test employer',
+      cnae: '12321',
+      activity: 'Production of unit tests',
+      riskLevel: 1,
+      eSocialEnrollmentType: 'CPF',
+      cpf: '12312312312',
+    });
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toBeInstanceOf(InvalidInformationError);
   });
 });

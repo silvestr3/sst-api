@@ -1,5 +1,6 @@
 import { Entity } from '@/core/entities/entity';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Cpf } from './value-objects/cpf';
 
 export interface EmployeeProps {
   subscriptionId: UniqueEntityID;
@@ -9,7 +10,7 @@ export interface EmployeeProps {
   departmentId: UniqueEntityID;
   positionId: UniqueEntityID;
   name: string;
-  cpf: string;
+  cpf: Cpf;
   admissionDate: Date;
   birthDate: Date;
   hasEmploymentRelationship: boolean;
@@ -77,7 +78,7 @@ export class Employee extends Entity<EmployeeProps> {
     return this.props.cpf;
   }
 
-  set cpf(cpf: string) {
+  set cpf(cpf: Cpf) {
     this.props.cpf = cpf;
   }
 
