@@ -1,0 +1,9 @@
+import { Repository } from '@/core/repositories/repository';
+import { Position } from '../../enterprise/entities/position';
+
+export abstract class PositionsRepository extends Repository<Position> {
+  abstract create(position: Position): Promise<void>;
+  abstract save(position: Position): Promise<void>;
+  abstract findById(id: string): Promise<Position | null>;
+  abstract fetchByEmployerId(id: string): Promise<Position[]>;
+}
