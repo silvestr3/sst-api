@@ -4,29 +4,30 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { FakeEmployersRepository } from 'test/repositories/fake-employers-repository';
 import { makeEmployer } from 'test/factories/make-employer';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
-import { FetchDepartmentsByEmployerIdUseCase } from '../fetch-departments-by-employer-id';
-import { FakeDepartmentsRepository } from 'test/repositories/fake-departments-repository';
 import { makeDepartment } from 'test/factories/make-department';
+import { FakeBranchesRepository } from 'test/repositories/fake-branches-repository';
+import { FetchBranchesByEmployerIdUseCase } from '../fetch-branches-by-employer-id';
+import { makeBranch } from 'test/factories/make-branch';
 
-describe('Fetch departments by employer id tests', () => {
+describe('Fetch branches by employer id tests', () => {
   let subscriptionsRepository: FakeSubscriptionsRepository;
-  let departmentsRepository: FakeDepartmentsRepository;
+  let branchesRepository: FakeBranchesRepository;
   let employersRepository: FakeEmployersRepository;
-  let sut: FetchDepartmentsByEmployerIdUseCase;
+  let sut: FetchBranchesByEmployerIdUseCase;
 
   beforeEach(() => {
     subscriptionsRepository = new FakeSubscriptionsRepository();
-    departmentsRepository = new FakeDepartmentsRepository();
+    branchesRepository = new FakeBranchesRepository();
     employersRepository = new FakeEmployersRepository();
 
-    sut = new FetchDepartmentsByEmployerIdUseCase(
+    sut = new FetchBranchesByEmployerIdUseCase(
       subscriptionsRepository,
-      departmentsRepository,
+      branchesRepository,
       employersRepository,
     );
   });
 
-  it('Should be able to fetch all departments from an employer', async () => {
+  it('Should be able to fetch all branches from an employer', async () => {
     const subscription = makeSubscription();
     subscriptionsRepository.items.push(subscription);
 
@@ -36,12 +37,12 @@ describe('Fetch departments by employer id tests', () => {
     employersRepository.items.push(employer);
 
     for (let i = 0; i < 20; i++) {
-      const department = makeDepartment({
+      const branch = makeBranch({
         subscriptionId: subscription.id,
         employerId: i < 10 ? employer.id : new UniqueEntityID('other-employer'),
       });
 
-      departmentsRepository.items.push(department);
+      branchesRepository.items.push(branch);
     }
 
     const result = await sut.execute({
@@ -51,13 +52,13 @@ describe('Fetch departments by employer id tests', () => {
     });
 
     // @ts-ignore
-    const { departments } = result.value;
+    const { branches } = result.value;
 
     expect(result.isRight()).toBeTruthy();
-    expect(departments).toHaveLength(10);
+    expect(branches).toHaveLength(10);
   });
 
-  it("Should not be able to fetch departments from another subscription's employer", async () => {
+  it("Should not be able to fetch branches from another subscription's employer", async () => {
     const subscription = makeSubscription();
     subscriptionsRepository.items.push(subscription);
 
@@ -65,11 +66,11 @@ describe('Fetch departments by employer id tests', () => {
     employersRepository.items.push(employer);
 
     for (let i = 0; i < 20; i++) {
-      const department = makeDepartment({
+      const branch = makeBranch({
         employerId: i < 10 ? employer.id : new UniqueEntityID('other-employer'),
       });
 
-      departmentsRepository.items.push(department);
+      branchesRepository.items.push(branch);
     }
 
     const result = await sut.execute({

@@ -19,4 +19,12 @@ export class FakeBranchesRepository implements BranchesRepository {
 
     return branch ?? null;
   }
+
+  async fetchByEmployerId(id: string): Promise<Branch[]> {
+    const branches = this.items.filter(
+      (item) => item.employerId.toString() === id,
+    );
+
+    return branches;
+  }
 }
