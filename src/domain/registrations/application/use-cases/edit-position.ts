@@ -6,40 +6,37 @@ import { Position } from '../../enterprise/entities/position';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { PositionsRepository } from '../repositories/positions-repository';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
-import { Employer } from '../../enterprise/entities/employer';
-import { EmployersRepository } from '../repositories/employers-repository';
 
-interface CreatePositionParams {
+interface EditPositionParams {
   subscriptionId: string;
   executorId: string;
-  employerId: string;
-  name: string;
-  description: string;
-  cbo: string;
+  positionId: string;
+  name?: string;
+  description?: string;
+  cbo?: string;
   isActive?: boolean;
 }
 
-type CreatePositionResponse = Either<
+type EditPositionResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { position: Position }
 >;
 
-export class CreatePositionUseCase {
+export class EditPositionUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
-    private employersRepository: EmployersRepository,
     private positionsRepository: PositionsRepository,
   ) {}
 
   async execute({
     subscriptionId,
     executorId,
-    employerId,
+    positionId,
     name,
     description,
     cbo,
     isActive = true,
-  }: CreatePositionParams): Promise<CreatePositionResponse> {
+  }: EditPositionParams): Promise<EditPositionResponse> {
     const subscription = await validateSubscription({
       executorId,
       subscriptionId,
@@ -50,28 +47,24 @@ export class CreatePositionUseCase {
       return left(new NotAllowedError());
     }
 
-    const getEmployer = await validateResourceOwnership<Employer>({
-      repository: this.employersRepository,
-      resourceId: employerId,
+    const getPosition = await validateResourceOwnership<Position>({
+      repository: this.positionsRepository,
+      resourceId: positionId,
       subscriptionId: subscription.id,
     });
 
-    if (getEmployer.isLeft()) {
-      return left(getEmployer.value);
+    if (getPosition.isLeft()) {
+      return left(getPosition.value);
     }
 
-    const employer = getEmployer.value;
+    const position = getPosition.value;
 
-    const position = Position.create({
-      subscriptionId: subscription.id,
-      employerId: employer.id,
-      name,
-      description,
-      cbo,
-      isActive,
-    });
+    position.name = name;
+    position.description = description;
+    position.cbo = cbo;
+    position.isActive = isActive;
 
-    await this.positionsRepository.create(position);
+    await this.positionsRepository.save(position);
 
     return right({ position });
   }

@@ -5,49 +5,42 @@ import { CreatePositionUseCase } from '../create-position';
 import { FakeEmployersRepository } from 'test/repositories/fake-employers-repository';
 import { FakePositionsRepository } from 'test/repositories/fake-positions-repository';
 import { makeEmployer } from 'test/factories/make-employer';
+import { EditPositionUseCase } from '../edit-position';
+import { makePosition } from 'test/factories/make-position';
 
-describe('Create position tests', () => {
+describe('Edit position tests', () => {
   let subscriptionsRepository: FakeSubscriptionsRepository;
-  let employersRepository: FakeEmployersRepository;
   let positionsRepository: FakePositionsRepository;
-  let sut: CreatePositionUseCase;
+  let sut: EditPositionUseCase;
 
   beforeEach(() => {
     subscriptionsRepository = new FakeSubscriptionsRepository();
-    employersRepository = new FakeEmployersRepository();
     positionsRepository = new FakePositionsRepository();
 
-    sut = new CreatePositionUseCase(
-      subscriptionsRepository,
-      employersRepository,
-      positionsRepository,
-    );
+    sut = new EditPositionUseCase(subscriptionsRepository, positionsRepository);
   });
 
-  it('Should be able to create a new position', async () => {
+  it('Should be able to edit a position', async () => {
     const subscription = makeSubscription();
     subscriptionsRepository.items.push(subscription);
 
-    const employer = makeEmployer({
+    const position = makePosition({
       subscriptionId: subscription.id,
+      name: 'Manager',
     });
-    employersRepository.items.push(employer);
+    positionsRepository.items.push(position);
 
     const result = await sut.execute({
       subscriptionId: subscription.id.toString(),
       executorId: subscription.administratorId.toString(),
-      employerId: employer.id.toString(),
-      name: 'Manager',
-      description: 'Manager description',
-      cbo: '1232',
+      positionId: position.id.toString(),
+      name: 'Testing manager',
     });
 
     expect(result.isRight()).toBeTruthy();
     expect(positionsRepository.items[0]).toEqual(
       expect.objectContaining({
-        name: 'Manager',
-        description: 'Manager description',
-        isActive: true,
+        name: 'Testing manager',
       }),
     );
   });
@@ -56,16 +49,16 @@ describe('Create position tests', () => {
     const subscription = makeSubscription();
     subscriptionsRepository.items.push(subscription);
 
-    const employer = makeEmployer();
-    employersRepository.items.push(employer);
+    const position = makePosition({
+      name: 'Manager',
+    });
+    positionsRepository.items.push(position);
 
     const result = await sut.execute({
       subscriptionId: subscription.id.toString(),
       executorId: subscription.administratorId.toString(),
-      employerId: employer.id.toString(),
-      name: 'Manager',
-      description: 'Manager description',
-      cbo: '1232',
+      positionId: position.id.toString(),
+      name: 'Testing manager',
     });
 
     expect(result.isLeft()).toBeTruthy();
