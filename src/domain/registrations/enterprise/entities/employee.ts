@@ -14,7 +14,7 @@ export interface EmployeeProps {
   admissionDate: Date;
   birthDate: Date;
   hasEmploymentRelationship: boolean;
-  registration: string;
+  registration?: string;
   lastClinicalEvaluation?: Date | null;
   gender: 'MALE' | 'FEMALE';
   email: string;
