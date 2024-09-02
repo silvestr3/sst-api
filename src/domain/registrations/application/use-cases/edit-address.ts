@@ -62,13 +62,13 @@ export class EditAddressUseCase {
 
     const address = getAddress.value;
 
-    address.cep = cep;
-    address.street = street;
-    address.complement = complement;
-    address.number = number;
-    address.district = district;
-    address.city = city;
-    address.state = state;
+    address.cep = cep ?? address.cep;
+    address.street = street ?? address.street;
+    address.complement = complement ?? address.complement;
+    address.number = number ?? address.number;
+    address.district = district ?? address.district;
+    address.city = city ?? address.city;
+    address.state = state ?? address.state;
 
     await this.addressesRepository.save(address);
 

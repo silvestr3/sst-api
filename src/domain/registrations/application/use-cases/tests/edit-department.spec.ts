@@ -46,6 +46,7 @@ describe('Edit department tests', () => {
     expect(departmentsRepository.items[0]).toEqual(
       expect.objectContaining({
         description: 'Edited department description',
+        name: expect.any(String),
       }),
     );
   });

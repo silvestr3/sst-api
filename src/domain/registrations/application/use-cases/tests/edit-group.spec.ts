@@ -38,6 +38,7 @@ describe('Edit group tests', () => {
     expect(groupsRepository.items[0]).toEqual(
       expect.objectContaining({
         name: 'Edited group name',
+        description: group.description,
       }),
     );
   });

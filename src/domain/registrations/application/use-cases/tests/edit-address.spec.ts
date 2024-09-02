@@ -1,6 +1,5 @@
 import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscriptions-repository';
 import { makeSubscription } from 'test/factories/make-subscription';
-import { CreateAddressUseCase } from '../create-address';
 import { FakeAddressesRepository } from 'test/repositories/fake-addresses-repository';
 import { makeAddress } from 'test/factories/make-address';
 import { EditAddressUseCase } from '../edit-address';
@@ -38,6 +37,8 @@ describe('Edit address tests', () => {
     expect(addressesRepository.items[0]).toEqual(
       expect.objectContaining({
         street: 'Edited street name',
+        city: address.city,
+        state: address.state,
       }),
     );
   });

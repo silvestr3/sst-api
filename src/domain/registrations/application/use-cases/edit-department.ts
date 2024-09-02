@@ -55,8 +55,8 @@ export class EditDepartmentUseCase {
 
     const department = getDepartment.value;
 
-    department.name = name;
-    department.description = description;
+    department.name = name ?? department.name;
+    department.description = description ?? department.description;
 
     await this.departmentsRepository.save(department);
 

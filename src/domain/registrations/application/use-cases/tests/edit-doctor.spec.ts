@@ -39,6 +39,7 @@ describe('Edit doctor tests', () => {
     expect(doctorsRepository.items[0]).toEqual(
       expect.objectContaining({
         name: 'Edited Doctor name',
+        crm: doctor.crm,
       }),
     );
   });

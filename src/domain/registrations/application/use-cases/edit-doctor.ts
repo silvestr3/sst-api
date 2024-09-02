@@ -59,10 +59,10 @@ export class EditDoctorUseCase {
 
     const doctor = getDoctor.value;
 
-    doctor.name = name;
-    doctor.crm = crm;
-    doctor.ufCrm = ufCrm;
-    doctor.phone = phone;
+    doctor.name = name ?? doctor.name;
+    doctor.crm = crm ?? doctor.crm;
+    doctor.ufCrm = ufCrm ?? doctor.ufCrm;
+    doctor.phone = phone ?? doctor.phone;
 
     await this.doctorsRepository.save(doctor);
 

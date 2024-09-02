@@ -1,10 +1,7 @@
 import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscriptions-repository';
 import { makeSubscription } from 'test/factories/make-subscription';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
-import { CreatePositionUseCase } from '../create-position';
-import { FakeEmployersRepository } from 'test/repositories/fake-employers-repository';
 import { FakePositionsRepository } from 'test/repositories/fake-positions-repository';
-import { makeEmployer } from 'test/factories/make-employer';
 import { EditPositionUseCase } from '../edit-position';
 import { makePosition } from 'test/factories/make-position';
 
@@ -41,6 +38,8 @@ describe('Edit position tests', () => {
     expect(positionsRepository.items[0]).toEqual(
       expect.objectContaining({
         name: 'Testing manager',
+        description: position.description,
+        cbo: position.cbo,
       }),
     );
   });

@@ -59,10 +59,10 @@ export class EditPositionUseCase {
 
     const position = getPosition.value;
 
-    position.name = name;
-    position.description = description;
-    position.cbo = cbo;
-    position.isActive = isActive;
+    position.name = name ?? position.name;
+    position.description = description ?? position.description;
+    position.cbo = cbo ?? position.cbo;
+    position.isActive = isActive ?? position.isActive;
 
     await this.positionsRepository.save(position);
 

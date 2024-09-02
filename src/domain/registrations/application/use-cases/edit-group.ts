@@ -57,9 +57,9 @@ export class EditGroupUseCase {
 
     const group = getGroup.value;
 
-    group.name = name;
-    group.description = description;
-    group.isActive = isActive;
+    group.name = name ?? group.name;
+    group.description = description ?? group.description;
+    group.isActive = isActive ?? group.isActive;
 
     await this.groupsRepository.save(group);
 
