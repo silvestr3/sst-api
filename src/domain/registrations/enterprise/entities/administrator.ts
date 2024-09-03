@@ -3,13 +3,13 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Cpf } from './value-objects/cpf';
 
 export interface AdministratorProps {
-  subscriptionId: UniqueEntityID;
+  subscriptionId?: UniqueEntityID;
   email: string;
   password: string;
   name: string;
   cpf: Cpf;
   phone?: string;
-  profilePictureUrl: string;
+  profilePictureUrl?: string;
 }
 
 export class Administrator extends Entity<AdministratorProps> {

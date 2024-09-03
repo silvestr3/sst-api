@@ -9,4 +9,8 @@ export class FakeSubscriptionsRepository implements SubscriptionsRepository {
 
     return subscription ?? null;
   }
+
+  async create(subscription: Subscription): Promise<void> {
+    this.items.push(subscription);
+  }
 }
