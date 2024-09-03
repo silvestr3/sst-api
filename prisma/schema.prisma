@@ -108,7 +108,7 @@ model Employer {
   nomeFantasia          String
   cnae                  String
   activity              String
-  riskLevel             String
+  riskLevel             Int
   responsibleDoctorId   String?
   isActive              Boolean
   addressId             String?
