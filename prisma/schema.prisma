@@ -1,0 +1,209 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Subscription {
+  id              String @id @default(uuid())
+  administratorId String
+
+  Address    Address[]
+  Employer   Employer[]
+  Group      Group[]
+  Doctor     Doctor[]
+  Branch     Branch[]
+  Department Department[]
+  Position   Position[]
+  User       User[]
+
+  @@map("subscriptions")
+}
+
+model Address {
+  id             String  @id @default(uuid())
+  subscriptionId String
+  cep            String
+  street         String
+  complement     String
+  number         String?
+  district       String
+  city           String
+  state          String
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+  Employer     Employer[]
+  Branch       Branch[]
+
+  @@map("addresses")
+}
+
+model User {
+  id                String  @id @default(uuid())
+  subscriptionId    String
+  email             String  @unique
+  password          String
+  name              String
+  cpf               String
+  phone             String?
+  profilePictureUrl String?
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+
+  @@map("users")
+}
+
+model Group {
+  id             String  @id @default(uuid())
+  subscriptionId String
+  name           String
+  description    String
+  logoUrl        String?
+  isActive       Boolean
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+  Employer     Employer[]
+  Employee     Employee[]
+
+  @@map("groups")
+}
+
+model Doctor {
+  id             String @id @default(uuid())
+  subscriptionId String
+  name           String
+  crm            String
+  ufCrm          String
+  phone          String
+
+  Employer     Employer[]
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+
+  @@map("doctors")
+}
+
+enum ESocialEnrollmentType {
+  CPF
+  CNPJ
+}
+
+model Employer {
+  id                    String                @id @default(uuid())
+  subscriptionId        String
+  groupId               String
+  eSocialEnrollmentType ESocialEnrollmentType
+  cpf                   String?
+  cnpj                  String?
+  razaoSocial           String
+  nomeFantasia          String
+  cnae                  String
+  activity              String
+  riskLevel             String
+  responsibleDoctorId   String?
+  isActive              Boolean
+  addressId             String?
+
+  group             Group        @relation(fields: [groupId], references: [id])
+  subscription      Subscription @relation(fields: [subscriptionId], references: [id])
+  responsibleDoctor Doctor?      @relation(fields: [responsibleDoctorId], references: [id])
+  address           Address?     @relation(fields: [addressId], references: [id])
+  Branch            Branch[]
+  Department        Department[]
+  Position          Position[]
+  Employee          Employee[]
+
+  @@map("employers")
+}
+
+model Branch {
+  id             String  @id @default(uuid())
+  subscriptionId String
+  employerId     String
+  addressId      String?
+  name           String
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+  employer     Employer     @relation(fields: [employerId], references: [id])
+  address      Address?     @relation(fields: [addressId], references: [id])
+  Employee     Employee[]
+
+  @@map("branches")
+}
+
+model Department {
+  id             String @id @default(uuid())
+  subscriptionId String
+  employerId     String
+  name           String
+  description    String
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+  employer     Employer     @relation(fields: [employerId], references: [id])
+  Employee     Employee[]
+
+  @@map("departments")
+}
+
+model Position {
+  id             String  @id @default(uuid())
+  subscriptionId String
+  employerId     String
+  name           String
+  description    String
+  cbo            String
+  isActive       Boolean
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+  employer     Employer     @relation(fields: [employerId], references: [id])
+  Employee     Employee[]
+
+  @@map("positions")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  INACTIVE
+  VACATIONS
+  REMOVED
+}
+
+model Employee {
+  id                        String         @id @default(uuid())
+  groupId                   String
+  employerId                String
+  branchId                  String
+  departmentId              String
+  positionId                String
+  name                      String
+  cpf                       String
+  admissionDate             DateTime
+  birthDate                 DateTime
+  hasEmploymentRelationship Boolean
+  registration              String?
+  lastClinicalEvaluation    DateTime?
+  gender                    Gender
+  email                     String
+  status                    EmployeeStatus
+
+  group      Group      @relation(fields: [groupId], references: [id])
+  employer   Employer   @relation(fields: [employerId], references: [id])
+  branch     Branch     @relation(fields: [branchId], references: [id])
+  department Department @relation(fields: [departmentId], references: [id])
+  position   Position   @relation(fields: [positionId], references: [id])
+
+  @@map("employees")
+}

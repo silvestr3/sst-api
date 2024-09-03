@@ -1,0 +1,13 @@
+services:
+  db:
+    container_name: sst-db
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sst-db
+      PGDATA: /pg
+    volumes:
+      - ./data/pg:/pg
