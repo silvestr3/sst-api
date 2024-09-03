@@ -22,6 +22,7 @@ interface EditEmployeeParams {
   registration?: string;
   gender?: 'MALE' | 'FEMALE';
   email?: string;
+  status?: 'ACTIVE' | 'INACTIVE' | 'VACATIONS' | 'REMOVED';
 }
 
 type EditEmployeeResponse = Either<
@@ -50,6 +51,7 @@ export class EditEmployeeUseCase {
     registration,
     gender,
     email,
+    status,
   }: EditEmployeeParams): Promise<EditEmployeeResponse> {
     const subscription = await validateSubscription({
       executorId,
@@ -94,6 +96,7 @@ export class EditEmployeeUseCase {
     employee.registration = registration ?? employee.registration;
     employee.gender = gender ?? employee.gender;
     employee.email = email ?? employee.email;
+    employee.status = status ?? employee.status;
 
     return right({ employee });
   }
