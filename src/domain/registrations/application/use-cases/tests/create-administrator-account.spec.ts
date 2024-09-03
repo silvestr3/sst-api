@@ -1,7 +1,4 @@
 import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscriptions-repository';
-import { makeSubscription } from 'test/factories/make-subscription';
-import { CreateAddressUseCase } from '../create-address';
-import { FakeAddressesRepository } from 'test/repositories/fake-addresses-repository';
 import { CreateAdministratorAccountUseCase } from '../create-administrator-account';
 import { FakeAdministratorsRepository } from 'test/repositories/fake-administrators-repository';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
