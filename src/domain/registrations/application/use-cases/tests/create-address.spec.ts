@@ -28,7 +28,7 @@ describe('Create address tests', () => {
       cep: '12312',
       street: 'Test street',
       complement: '',
-      number: 1,
+      number: '2',
       district: 'Test district',
       city: 'Test city',
       state: 'Test state',

@@ -7,6 +7,7 @@ import { Cpf } from '../../enterprise/entities/value-objects/cpf';
 import { InvalidInformationError } from './errors/invalid-information-error';
 import { HashGenerator } from '../cryptography/hash-generator';
 import { Subscription } from '../../enterprise/entities/subscription';
+import { Injectable } from '@nestjs/common';
 
 interface CreateAdministratorAccountParams {
   email: string;
@@ -21,6 +22,7 @@ type CreateAdministratorAccountResponse = Either<
   { administrator: Administrator }
 >;
 
+@Injectable()
 export class CreateAdministratorAccountUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

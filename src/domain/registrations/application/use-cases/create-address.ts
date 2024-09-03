@@ -11,7 +11,7 @@ interface CreateAddressParams {
   cep: string;
   street: string;
   complement: string;
-  number?: number;
+  number?: string;
   district: string;
   city: string;
   state: string;

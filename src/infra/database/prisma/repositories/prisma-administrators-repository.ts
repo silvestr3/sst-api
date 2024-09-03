@@ -17,6 +17,8 @@ export class PrismaAdministratorsRepository
       },
     });
 
+    if (!administrator) return null;
+
     return PrismaAdministratorMapper.toDomain(administrator);
   }
 
@@ -26,6 +28,8 @@ export class PrismaAdministratorsRepository
         email,
       },
     });
+
+    if (!administrator) return null;
 
     return PrismaAdministratorMapper.toDomain(administrator);
   }

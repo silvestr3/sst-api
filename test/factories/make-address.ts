@@ -16,7 +16,7 @@ export function makeAddress(
       cep: faker.location.zipCode(),
       city: faker.location.city(),
       complement: faker.lorem.sentence(3),
-      number: faker.number.int(),
+      number: faker.string.numeric(),
       street: faker.location.street(),
       district: faker.location.county(),
       state: faker.location.state(),

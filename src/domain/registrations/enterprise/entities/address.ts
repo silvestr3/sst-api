@@ -6,7 +6,7 @@ export interface AddressProps {
   cep: string;
   street: string;
   complement: string;
-  number?: number;
+  number?: string;
   district: string;
   city: string;
   state: string;
@@ -45,7 +45,7 @@ export class Address extends Entity<AddressProps> {
     return this.props.number;
   }
 
-  set number(number: number) {
+  set number(number: string) {
     this.props.number = number;
   }
 
