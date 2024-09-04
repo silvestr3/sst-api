@@ -4,6 +4,8 @@ import { GroupsRepository } from '../repositories/groups-repository';
 import { SubscriptionsRepository } from '../repositories/subscriptions-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { validateSubscription } from './util/validate-subscription';
+import { Injectable } from '@nestjs/common';
+import { GroupPresenter } from '@/infra/http/presenters/group-presenter';
 
 interface FetchAllGroupsParams {
   subscriptionId: string;
@@ -12,6 +14,7 @@ interface FetchAllGroupsParams {
 
 type FetchAllGroupsResponse = Either<NotAllowedError, { groups: Group[] }>;
 
+@Injectable()
 export class FetchAllGroupsUseCase {
   constructor(
     private groupsRepository: GroupsRepository,

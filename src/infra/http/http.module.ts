@@ -8,6 +8,8 @@ import { AuthenticateUseCase } from '@/domain/registrations/application/use-case
 import { AuthModule } from '../auth/auth.module';
 import { CreateGroupController } from './controllers/create-group.controller';
 import { CreateGroupUseCase } from '@/domain/registrations/application/use-cases/create-group';
+import { FetchAllGroupsController } from './controllers/fetch-all-groups.controller';
+import { FetchAllGroupsUseCase } from '@/domain/registrations/application/use-cases/fetch-all-groups';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -15,11 +17,13 @@ import { CreateGroupUseCase } from '@/domain/registrations/application/use-cases
     CreateAdministratorAccountUseCase,
     AuthenticateUseCase,
     CreateGroupUseCase,
+    FetchAllGroupsUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
     AuthenticateController,
     CreateGroupController,
+    FetchAllGroupsController,
   ],
 })
 export class HttpModule {}

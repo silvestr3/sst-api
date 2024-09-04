@@ -3,7 +3,10 @@ import {
   Group,
   GroupProps,
 } from '@/domain/registrations/enterprise/entities/group';
+import { PrismaGroupMapper } from '@/infra/database/prisma/mappers/prisma-group-mapper';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 export function makeGroup(
@@ -22,4 +25,22 @@ export function makeGroup(
   );
 
   return group;
+}
+
+@Injectable()
+export class GroupFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaGroup(data: Partial<GroupProps> = {}) {
+    const group = makeGroup({
+      ...data,
+    });
+
+    const dataGroup = PrismaGroupMapper.toPrisma(group);
+    await this.prisma.group.create({
+      data: dataGroup,
+    });
+
+    return { group };
+  }
 }
