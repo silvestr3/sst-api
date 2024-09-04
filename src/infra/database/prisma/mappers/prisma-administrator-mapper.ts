@@ -22,7 +22,7 @@ export class PrismaAdministratorMapper {
   static toPrisma(raw: Administrator): User {
     return {
       id: raw.id.toString(),
-      subscriptionId: raw.subscriptionId.toString(),
+      subscriptionId: raw.subscriptionId ? raw.subscriptionId.toString() : null,
       email: raw.email,
       password: raw.password,
       name: raw.name,

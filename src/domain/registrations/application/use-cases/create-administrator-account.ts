@@ -63,10 +63,11 @@ export class CreateAdministratorAccountUseCase {
       administratorId: administrator.id,
     });
 
-    administrator.subscriptionId = subscription.id;
-
     await this.administratorsRepository.create(administrator);
     await this.subscriptionsRepository.create(subscription);
+
+    administrator.subscriptionId = subscription.id;
+    await this.administratorsRepository.save(administrator);
 
     return right({ administrator });
   }

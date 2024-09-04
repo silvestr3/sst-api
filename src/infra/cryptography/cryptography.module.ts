@@ -4,9 +4,11 @@ import { BcryptService } from './bcrypt.service';
 import { Encrypter } from '@/domain/registrations/application/cryptography/encrypter';
 import { HashGenerator } from '@/domain/registrations/application/cryptography/hash-generator';
 import { HashComparer } from '@/domain/registrations/application/cryptography/hash-comparer';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   providers: [
+    JwtService,
     {
       provide: Encrypter,
       useClass: JwtEncrypter,
