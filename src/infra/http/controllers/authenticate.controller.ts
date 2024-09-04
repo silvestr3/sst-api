@@ -16,7 +16,7 @@ import { InvalidCredentialsError } from '@/domain/registrations/application/use-
 import {
   AuthenticateDTO,
   AuthenticateResponseDTO,
-} from './dto/authenticate.dto';
+} from '../dto/authenticate.dto';
 
 @Controller('/sessions')
 @Public()

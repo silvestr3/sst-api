@@ -15,7 +15,7 @@ import {
   ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateAdministratorAccountDTO } from './dto/create-account.dto';
+import { CreateAdministratorAccountDTO } from '../dto/create-account.dto';
 
 @Controller('/accounts')
 @Public()
