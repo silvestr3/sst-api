@@ -6,10 +6,20 @@ import { CreateAdministratorAccountController } from './controllers/create-accou
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { AuthenticateUseCase } from '@/domain/registrations/application/use-cases/authenticate';
 import { AuthModule } from '../auth/auth.module';
+import { CreateGroupController } from './controllers/create-group.controller';
+import { CreateGroupUseCase } from '@/domain/registrations/application/use-cases/create-group';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
-  providers: [CreateAdministratorAccountUseCase, AuthenticateUseCase],
-  controllers: [CreateAdministratorAccountController, AuthenticateController],
+  providers: [
+    CreateAdministratorAccountUseCase,
+    AuthenticateUseCase,
+    CreateGroupUseCase,
+  ],
+  controllers: [
+    CreateAdministratorAccountController,
+    AuthenticateController,
+    CreateGroupController,
+  ],
 })
 export class HttpModule {}

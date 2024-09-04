@@ -4,17 +4,19 @@ import { GroupsRepository } from '../repositories/groups-repository';
 import { SubscriptionsRepository } from '../repositories/subscriptions-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { validateSubscription } from './util/validate-subscription';
+import { Injectable } from '@nestjs/common';
 
 interface CreateGroupParams {
   subscriptionId: string;
   executorId: string;
   name: string;
-  description;
+  description: string;
   isActive?: boolean;
 }
 
 type CreateGroupResponse = Either<NotAllowedError, { group: Group }>;
 
+@Injectable()
 export class CreateGroupUseCase {
   constructor(
     private groupsRepository: GroupsRepository,

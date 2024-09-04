@@ -13,6 +13,7 @@ async function bootstrap() {
     .setTitle('SST API')
     .setDescription('Documentação para API de gestão SST')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

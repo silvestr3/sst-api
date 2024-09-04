@@ -63,6 +63,6 @@ export class AdministratorFactory {
       },
     });
 
-    return administrator;
+    return { administrator, subscription };
   }
 }
