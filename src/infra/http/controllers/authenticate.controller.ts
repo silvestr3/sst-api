@@ -9,6 +9,7 @@ import {
 import { Public } from '@/infra/auth/public.decorator';
 import {
   ApiCreatedResponse,
+  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -29,6 +30,9 @@ export class AuthenticateController {
   })
   @ApiUnauthorizedResponse({
     description: 'Invalid credentials',
+  })
+  @ApiOperation({
+    summary: 'Authenticate user',
   })
   @Post()
   async handle(@Body() body: AuthenticateDTO) {

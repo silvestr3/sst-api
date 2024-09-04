@@ -13,6 +13,7 @@ import {
   ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateAdministratorAccountDTO } from '../dto/create-account.dto';
@@ -31,6 +32,9 @@ export class CreateAdministratorAccountController {
   })
   @ApiConflictResponse({
     description: 'Account already exists',
+  })
+  @ApiOperation({
+    summary: 'Create new administrator account',
   })
   @Post()
   async handle(@Body() body: CreateAdministratorAccountDTO) {
