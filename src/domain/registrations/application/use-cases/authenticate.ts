@@ -3,6 +3,7 @@ import { AdministratorsRepository } from '../repositories/administrators-reposit
 import { HashComparer } from '../cryptography/hash-comparer';
 import { Encrypter } from '../cryptography/encrypter';
 import { InvalidCredentialsError } from './errors/invalid-credentials-error';
+import { Injectable } from '@nestjs/common';
 
 interface AuthenticateParams {
   email: string;
@@ -10,7 +11,7 @@ interface AuthenticateParams {
 }
 
 type AuthenticateResponse = Either<InvalidCredentialsError, { token: string }>;
-
+@Injectable()
 export class AuthenticateUseCase {
   constructor(
     private administratorsRepository: AdministratorsRepository,
@@ -38,8 +39,8 @@ export class AuthenticateUseCase {
     }
 
     const token = await this.encrypter.encrypt({
-      sub: account.id,
-      subscription: account.subscriptionId,
+      sub: account.id.toString(),
+      subscription: account.subscriptionId.toString(),
     });
 
     return right({ token });
