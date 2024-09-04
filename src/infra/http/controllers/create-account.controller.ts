@@ -8,58 +8,15 @@ import {
   Controller,
   Post,
 } from '@nestjs/common';
-import {
-  IsEmail,
-  IsOptional,
-  IsString,
-  Length,
-  MinLength,
-} from 'class-validator';
 import { Public } from '@/infra/auth/public.decorator';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
-  ApiConsumes,
   ApiCreatedResponse,
-  ApiProperty,
-  ApiPropertyOptional,
   ApiTags,
 } from '@nestjs/swagger';
+import { CreateAdministratorAccountDTO } from './dto/create-account.dto';
 
-class CreateAdministratorAccountDTO {
-  @ApiProperty()
-  @IsString()
-  @IsEmail({}, { message: 'Email is invalid' })
-  email: string;
-
-  @ApiProperty()
-  @IsString()
-  @MinLength(8, { message: 'Password must contain at least 8 characters' })
-  password: string;
-
-  @ApiProperty()
-  @IsString()
-  name: string;
-
-  @ApiProperty()
-  @IsString()
-  @Length(11, 11, { message: 'CPF must have length of 11' })
-  cpf: string;
-
-  @ApiPropertyOptional()
-  @IsString()
-  @IsOptional()
-  phone?: string;
-}
-
-@ApiTags('Accounts')
-@ApiCreatedResponse()
-@ApiBadRequestResponse({
-  description: 'Some information is missing or invalid',
-})
-@ApiConflictResponse({
-  description: 'Account already exists',
-})
 @Controller('/accounts')
 @Public()
 export class CreateAdministratorAccountController {
@@ -67,6 +24,14 @@ export class CreateAdministratorAccountController {
     private createAdministratorAccount: CreateAdministratorAccountUseCase,
   ) {}
 
+  @ApiTags('Accounts')
+  @ApiCreatedResponse()
+  @ApiBadRequestResponse({
+    description: 'Some information is missing or invalid',
+  })
+  @ApiConflictResponse({
+    description: 'Account already exists',
+  })
   @Post()
   async handle(@Body() body: CreateAdministratorAccountDTO) {
     const { email, password, name, cpf, phone } = body;

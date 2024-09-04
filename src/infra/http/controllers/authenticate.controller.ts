@@ -6,31 +6,17 @@ import {
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
-import { IsEmail, IsString } from 'class-validator';
 import { Public } from '@/infra/auth/public.decorator';
 import {
   ApiCreatedResponse,
-  ApiProperty,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { InvalidCredentialsError } from '@/domain/registrations/application/use-cases/errors/invalid-credentials-error';
-
-class AuthenticateDTO {
-  @ApiProperty()
-  @IsString()
-  @IsEmail({}, { message: 'Email is invalid' })
-  email: string;
-
-  @ApiProperty()
-  @IsString()
-  password: string;
-}
-
-class AuthenticateResponse {
-  @ApiProperty()
-  token: string;
-}
+import {
+  AuthenticateDTO,
+  AuthenticateResponseDTO,
+} from './dto/authenticate.dto';
 
 @Controller('/sessions')
 @Public()
@@ -39,7 +25,7 @@ export class AuthenticateController {
 
   @ApiTags('Accounts')
   @ApiCreatedResponse({
-    type: AuthenticateResponse,
+    type: AuthenticateResponseDTO,
   })
   @ApiUnauthorizedResponse({
     description: 'Invalid credentials',
