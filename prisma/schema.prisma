@@ -50,7 +50,7 @@ model Address {
 
 model User {
   id                String  @id @default(uuid())
-  subscriptionId    String
+  subscriptionId    String?
   email             String  @unique
   password          String
   name              String
@@ -58,7 +58,7 @@ model User {
   phone             String?
   profilePictureUrl String?
 
-  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id])
 
   @@map("users")
 }
