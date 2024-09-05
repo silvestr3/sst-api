@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class GroupObject {
   @ApiProperty()
+  id: string;
+
+  @ApiProperty()
   name: string;
 
   @ApiProperty()

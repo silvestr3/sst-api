@@ -8,6 +8,7 @@ import { GroupNotEmptyError } from './errors/group-not-empty-error';
 import { validateSubscription } from './util/validate-subscription';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Group } from '../../enterprise/entities/group';
+import { Injectable } from '@nestjs/common';
 
 interface DeleteGroupParams {
   subscriptionId: string;
@@ -19,7 +20,7 @@ type DeleteGroupResponse = Either<
   NotAllowedError | ResourceNotFoundError | GroupNotEmptyError,
   null
 >;
-
+@Injectable()
 export class DeleteGroupUseCase {
   constructor(
     private groupsRepository: GroupsRepository,

@@ -52,6 +52,8 @@ export class PrismaGroupsRepository implements GroupsRepository {
       },
     });
 
+    if (!group) return null;
+
     return PrismaGroupMapper.toDomain(group);
   }
 }
