@@ -11,6 +11,8 @@ import { FetchAllGroupsController } from './controllers/fetch-all-groups.control
 import { FetchAllGroupsUseCase } from '@/domain/registrations/application/use-cases/fetch-all-groups';
 import { DeleteGroupController } from './controllers/delete-group.controller';
 import { DeleteGroupUseCase } from '@/domain/registrations/application/use-cases/delete-group';
+import { EditGroupController } from './controllers/edit-group.controller';
+import { EditGroupUseCase } from '@/domain/registrations/application/use-cases/edit-group';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -20,6 +22,7 @@ import { DeleteGroupUseCase } from '@/domain/registrations/application/use-cases
     CreateGroupUseCase,
     FetchAllGroupsUseCase,
     DeleteGroupUseCase,
+    EditGroupUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -27,6 +30,7 @@ import { DeleteGroupUseCase } from '@/domain/registrations/application/use-cases
     CreateGroupController,
     FetchAllGroupsController,
     DeleteGroupController,
+    EditGroupController,
   ],
 })
 export class HttpModule {}

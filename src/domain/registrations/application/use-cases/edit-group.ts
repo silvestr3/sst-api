@@ -6,6 +6,7 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { validateSubscription } from './util/validate-subscription';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Injectable } from '@nestjs/common';
 
 interface EditGroupParams {
   subscriptionId: string;
@@ -20,7 +21,7 @@ type EditGroupResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { group: Group }
 >;
-
+@Injectable()
 export class EditGroupUseCase {
   constructor(
     private groupsRepository: GroupsRepository,

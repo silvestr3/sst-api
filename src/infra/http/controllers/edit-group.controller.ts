@@ -1,16 +1,17 @@
 import {
   BadRequestException,
-  NotFoundException,
-  UnauthorizedException,
+  Body,
   Controller,
-  Delete,
+  NotFoundException,
   Param,
-  HttpCode,
+  Patch,
+  UnauthorizedException,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiNoContentResponse,
+  ApiCreatedResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -18,16 +19,17 @@ import {
 import { CurrentUser } from '@/infra/auth/current-user.decorator';
 import { UserPayload } from '@/infra/auth/jwt-strategy';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
-import { DeleteGroupUseCase } from '@/domain/registrations/application/use-cases/delete-group';
+import { EditGroupUseCase } from '@/domain/registrations/application/use-cases/edit-group';
+import { EditGroupDTO } from '../dto/edit-group.dto';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 
 @Controller('/groups/:groupId')
-export class DeleteGroupController {
-  constructor(private deleteGroup: DeleteGroupUseCase) {}
+export class EditGroupController {
+  constructor(private editGroupUseCase: EditGroupUseCase) {}
 
   @ApiTags('Groups')
   @ApiBearerAuth()
-  @ApiNoContentResponse()
+  @ApiOkResponse()
   @ApiUnauthorizedResponse({
     description: 'User not authorized to perform this action',
   })
@@ -35,20 +37,24 @@ export class DeleteGroupController {
     description: 'Group not found',
   })
   @ApiOperation({
-    summary: 'Delete a group by ID',
+    summary: 'Edit a group by ID',
   })
-  @HttpCode(204)
-  @Delete()
+  @Patch()
   async handle(
     @CurrentUser() user: UserPayload,
     @Param('groupId') groupId: string,
+    @Body() body: EditGroupDTO,
   ) {
+    const { name, description, isActive } = body;
     const { sub, subscription } = user;
 
-    const result = await this.deleteGroup.execute({
+    const result = await this.editGroupUseCase.execute({
       subscriptionId: subscription,
       executorId: sub,
       groupId,
+      name,
+      description,
+      isActive,
     });
 
     if (result.isLeft()) {
