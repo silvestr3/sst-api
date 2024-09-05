@@ -20,7 +20,7 @@ export class PrismaBranchMapper {
       id: raw.id.toString(),
       subscriptionId: raw.subscriptionId.toString(),
       employerId: raw.employerId.toString(),
-      addressId: raw.addressId.toString(),
+      addressId: raw.addressId ? raw.addressId.toString() : null,
       name: raw.name,
     };
   }

@@ -13,6 +13,8 @@ import { DeleteGroupController } from './controllers/delete-group.controller';
 import { DeleteGroupUseCase } from '@/domain/registrations/application/use-cases/delete-group';
 import { EditGroupController } from './controllers/edit-group.controller';
 import { EditGroupUseCase } from '@/domain/registrations/application/use-cases/edit-group';
+import { CreateEmployerController } from './controllers/create-employer.controller';
+import { CreateEmployerUseCase } from '@/domain/registrations/application/use-cases/create-employer';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -23,6 +25,7 @@ import { EditGroupUseCase } from '@/domain/registrations/application/use-cases/e
     FetchAllGroupsUseCase,
     DeleteGroupUseCase,
     EditGroupUseCase,
+    CreateEmployerUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -31,6 +34,7 @@ import { EditGroupUseCase } from '@/domain/registrations/application/use-cases/e
     FetchAllGroupsController,
     DeleteGroupController,
     EditGroupController,
+    CreateEmployerController,
   ],
 })
 export class HttpModule {}

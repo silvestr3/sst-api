@@ -32,13 +32,15 @@ export class PrismaEmployerMapper {
       id: raw.id.toString(),
       subscriptionId: raw.subscriptionId.toString(),
       groupId: raw.groupId.toString(),
-      responsibleDoctorId: raw.responsibleDoctorId.toString() ?? null,
-      addressId: raw.addressId.toString() ?? null,
+      responsibleDoctorId: raw.responsibleDoctorId
+        ? raw.responsibleDoctorId.toString()
+        : null,
+      addressId: raw.addressId ? raw.addressId.toString() : null,
       activity: raw.activity,
       cnae: raw.cnae,
       eSocialEnrollmentType: raw.eSocialEnrollmentType,
       cpf: raw.cpf ? raw.cpf.value : null,
-      cnpj: raw.cnpj,
+      cnpj: raw.cnpj ? raw.cnpj : null,
       isActive: raw.isActive,
       nomeFantasia: raw.nomeFantasia,
       razaoSocial: raw.razaoSocial,

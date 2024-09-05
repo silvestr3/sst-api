@@ -18,6 +18,7 @@ import { validateSubscription } from './util/validate-subscription';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Cpf } from '../../enterprise/entities/value-objects/cpf';
 import { InvalidInformationError } from './errors/invalid-information-error';
+import { Injectable } from '@nestjs/common';
 
 interface CreateEmployerParams {
   subscriptionId: string;
@@ -43,6 +44,7 @@ type CreateEmployerResponse = Either<
   { employer: Employer }
 >;
 
+@Injectable()
 export class CreateEmployerUseCase {
   constructor(
     private groupsRepository: GroupsRepository,
