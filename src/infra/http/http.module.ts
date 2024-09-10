@@ -15,6 +15,8 @@ import { EditGroupController } from './controllers/edit-group.controller';
 import { EditGroupUseCase } from '@/domain/registrations/application/use-cases/edit-group';
 import { CreateEmployerController } from './controllers/create-employer.controller';
 import { CreateEmployerUseCase } from '@/domain/registrations/application/use-cases/create-employer';
+import { FetchEmployersByGroupIdController } from './controllers/fetch-employers-by-group-id.controller';
+import { FetchEmployersByGroupIdUseCase } from '@/domain/registrations/application/use-cases/fetch-employers-by-group-id';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -26,6 +28,7 @@ import { CreateEmployerUseCase } from '@/domain/registrations/application/use-ca
     DeleteGroupUseCase,
     EditGroupUseCase,
     CreateEmployerUseCase,
+    FetchEmployersByGroupIdUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -35,6 +38,7 @@ import { CreateEmployerUseCase } from '@/domain/registrations/application/use-ca
     DeleteGroupController,
     EditGroupController,
     CreateEmployerController,
+    FetchEmployersByGroupIdController,
   ],
 })
 export class HttpModule {}

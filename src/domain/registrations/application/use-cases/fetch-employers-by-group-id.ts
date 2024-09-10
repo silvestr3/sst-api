@@ -8,6 +8,7 @@ import { EmployersRepository } from '../repositories/employers-repository';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { Employer } from '../../enterprise/entities/employer';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Injectable } from '@nestjs/common';
 
 interface FetchEmployersByGroupIdParams {
   subscriptionId: string;
@@ -19,7 +20,7 @@ type FetchEmployersByGroupIdResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { employers: Employer[] }
 >;
-
+@Injectable()
 export class FetchEmployersByGroupIdUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
