@@ -6,6 +6,7 @@ import { EmployersRepository } from '../repositories/employers-repository';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Injectable } from '@nestjs/common';
 
 interface InactivateEmployerParams {
   subscriptionId: string;
@@ -18,6 +19,7 @@ type InactivateEmployerResponse = Either<
   { employer: Employer }
 >;
 
+@Injectable()
 export class InactivateEmployerUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

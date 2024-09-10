@@ -17,6 +17,8 @@ import { CreateEmployerController } from './controllers/create-employer.controll
 import { CreateEmployerUseCase } from '@/domain/registrations/application/use-cases/create-employer';
 import { FetchEmployersByGroupIdController } from './controllers/fetch-employers-by-group-id.controller';
 import { FetchEmployersByGroupIdUseCase } from '@/domain/registrations/application/use-cases/fetch-employers-by-group-id';
+import { InactivateEmployerController } from './controllers/inactivate-employer.controller';
+import { InactivateEmployerUseCase } from '@/domain/registrations/application/use-cases/inactivate-employer';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -29,6 +31,7 @@ import { FetchEmployersByGroupIdUseCase } from '@/domain/registrations/applicati
     EditGroupUseCase,
     CreateEmployerUseCase,
     FetchEmployersByGroupIdUseCase,
+    InactivateEmployerUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -39,6 +42,7 @@ import { FetchEmployersByGroupIdUseCase } from '@/domain/registrations/applicati
     EditGroupController,
     CreateEmployerController,
     FetchEmployersByGroupIdController,
+    InactivateEmployerController,
   ],
 })
 export class HttpModule {}
