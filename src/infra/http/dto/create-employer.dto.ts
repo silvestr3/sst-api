@@ -5,6 +5,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
   Max,
   Min,
 } from 'class-validator';
@@ -17,6 +18,7 @@ enum eSocialEnrollmentTypeValues {
 export class CreateEmployerDTO {
   @ApiProperty()
   @IsString()
+  @IsUUID()
   groupId: string;
 
   @ApiProperty({

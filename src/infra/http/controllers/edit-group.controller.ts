@@ -22,6 +22,7 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { EditGroupUseCase } from '@/domain/registrations/application/use-cases/edit-group';
 import { EditGroupDTO } from '../dto/edit-group.dto';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { IsValidUUIDPipe } from '../pipes/is-valid-uuid.pipe';
 
 @Controller('/groups/:groupId')
 export class EditGroupController {
@@ -42,7 +43,7 @@ export class EditGroupController {
   @Patch()
   async handle(
     @CurrentUser() user: UserPayload,
-    @Param('groupId') groupId: string,
+    @Param('groupId', new IsValidUUIDPipe('groupId')) groupId: string,
     @Body() body: EditGroupDTO,
   ) {
     const { name, description, isActive } = body;

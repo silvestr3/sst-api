@@ -20,6 +20,7 @@ import { UserPayload } from '@/infra/auth/jwt-strategy';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { InactivateEmployerUseCase } from '@/domain/registrations/application/use-cases/inactivate-employer';
+import { IsValidUUIDPipe } from '../pipes/is-valid-uuid.pipe';
 
 @Controller('/employers/:employerId')
 export class InactivateEmployerController {
@@ -41,7 +42,7 @@ export class InactivateEmployerController {
   @HttpCode(204)
   async handle(
     @CurrentUser() user: UserPayload,
-    @Param('employerId') employerId: string,
+    @Param('employerId', new IsValidUUIDPipe('employerId')) employerId: string,
   ) {
     const { sub, subscription } = user;
 

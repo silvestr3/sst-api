@@ -4,6 +4,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  ParseUUIDPipe,
   UnauthorizedException,
 } from '@nestjs/common';
 import {
@@ -20,6 +21,7 @@ import { FetchEmployersByGroupIdUseCase } from '@/domain/registrations/applicati
 import { FetchEmployersByGroupIdResponse } from '../dto/fetch-employers-by-group-id.dto';
 import { EmployerPresenter } from '../presenters/employer-presenter';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { IsValidUUIDPipe } from '../pipes/is-valid-uuid.pipe';
 
 @Controller('/groups/:groupId/employers')
 export class FetchEmployersByGroupIdController {
@@ -42,7 +44,7 @@ export class FetchEmployersByGroupIdController {
   @Get()
   async handle(
     @CurrentUser() user: UserPayload,
-    @Param('groupId') groupId: string,
+    @Param('groupId', new IsValidUUIDPipe('groupId')) groupId: string,
   ) {
     const { sub, subscription } = user;
 
