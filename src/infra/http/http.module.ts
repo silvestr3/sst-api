@@ -21,6 +21,8 @@ import { InactivateEmployerController } from './controllers/inactivate-employer.
 import { InactivateEmployerUseCase } from '@/domain/registrations/application/use-cases/inactivate-employer';
 import { CreateAddressController } from './controllers/create-address.controller';
 import { CreateAddressUseCase } from '@/domain/registrations/application/use-cases/create-address';
+import { EditAddressController } from './controllers/edit-address.controller';
+import { EditAddressUseCase } from '@/domain/registrations/application/use-cases/edit-address';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -35,6 +37,7 @@ import { CreateAddressUseCase } from '@/domain/registrations/application/use-cas
     FetchEmployersByGroupIdUseCase,
     InactivateEmployerUseCase,
     CreateAddressUseCase,
+    EditAddressUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -47,6 +50,7 @@ import { CreateAddressUseCase } from '@/domain/registrations/application/use-cas
     FetchEmployersByGroupIdController,
     InactivateEmployerController,
     CreateAddressController,
+    EditAddressController,
   ],
 })
 export class HttpModule {}

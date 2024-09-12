@@ -6,6 +6,7 @@ import { AddressesRepository } from '../repositories/addresses-repository';
 import { validateSubscription } from './util/validate-subscription';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Injectable } from '@nestjs/common';
 
 interface EditAddressParams {
   subscriptionId: string;
@@ -20,8 +21,12 @@ interface EditAddressParams {
   state?: string;
 }
 
-type EditAddressResponse = Either<NotAllowedError, { address: Address }>;
+type EditAddressResponse = Either<
+  NotAllowedError | ResourceNotFoundError,
+  { address: Address }
+>;
 
+@Injectable()
 export class EditAddressUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

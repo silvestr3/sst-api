@@ -3,7 +3,10 @@ import {
   Address,
   AddressProps,
 } from '@/domain/registrations/enterprise/entities/address';
+import { PrismaAddressMapper } from '@/infra/database/prisma/mappers/prisma-address-mapper';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 export function makeAddress(
@@ -26,4 +29,22 @@ export function makeAddress(
   );
 
   return address;
+}
+
+@Injectable()
+export class AddressFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaAddress(data: Partial<AddressProps> = {}) {
+    const address = makeAddress({
+      ...data,
+    });
+
+    const dataAddress = PrismaAddressMapper.toPrisma(address);
+    await this.prisma.address.create({
+      data: dataAddress,
+    });
+
+    return { address };
+  }
 }
