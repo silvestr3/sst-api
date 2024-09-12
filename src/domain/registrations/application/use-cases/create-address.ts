@@ -4,13 +4,14 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { Address } from '../../enterprise/entities/address';
 import { AddressesRepository } from '../repositories/addresses-repository';
 import { validateSubscription } from './util/validate-subscription';
+import { Injectable } from '@nestjs/common';
 
 interface CreateAddressParams {
   subscriptionId: string;
   executorId: string;
   cep: string;
   street: string;
-  complement: string;
+  complement?: string;
   number?: string;
   district: string;
   city: string;
@@ -19,6 +20,7 @@ interface CreateAddressParams {
 
 type CreateAddressResponse = Either<NotAllowedError, { address: Address }>;
 
+@Injectable()
 export class CreateAddressUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

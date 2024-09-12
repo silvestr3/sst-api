@@ -5,7 +5,7 @@ export interface AddressProps {
   subscriptionId: UniqueEntityID;
   cep: string;
   street: string;
-  complement: string;
+  complement?: string;
   number?: string;
   district: string;
   city: string;
