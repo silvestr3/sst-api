@@ -54,6 +54,12 @@ describe('Create address (e2e)', () => {
 
     expect(response.statusCode).toEqual(201);
 
+    expect(response.body).toEqual({
+      address: expect.objectContaining({
+        id: expect.any(String),
+      }),
+    });
+
     const addressOnDb = await prisma.address.findFirst({
       where: {
         street: 'Rua dos patos',

@@ -13,17 +13,21 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { CreateAddressUseCase } from '@/domain/registrations/application/use-cases/create-address';
-import { CreateAddressDTO } from '../dto/create-address.dto';
+import { AddressObjectDTO, CreateAddressDTO } from '../dto/create-address.dto';
 import { CurrentUser } from '@/infra/auth/current-user.decorator';
 import { UserPayload } from '@/infra/auth/jwt-strategy';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { AddressPresenter } from '../presenters/address-presenter';
 
 @Controller('/addresses')
 export class CreateAddressController {
   constructor(private createAddress: CreateAddressUseCase) {}
 
   @ApiTags('Addresses')
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({
+    type: AddressObjectDTO,
+    description: 'New Address',
+  })
   @ApiUnauthorizedResponse({
     description: 'User is not allowed to perform this action',
   })
@@ -61,5 +65,9 @@ export class CreateAddressController {
           throw new BadRequestException();
       }
     }
+
+    const { address } = result.value;
+
+    return { address: AddressPresenter.toHttp(address) };
   }
 }
