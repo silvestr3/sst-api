@@ -10,7 +10,10 @@ interface AuthenticateParams {
   password: string;
 }
 
-type AuthenticateResponse = Either<InvalidCredentialsError, { token: string }>;
+type AuthenticateResponse = Either<
+  InvalidCredentialsError,
+  { token: string; name: string; profilePicture?: string; id: string }
+>;
 @Injectable()
 export class AuthenticateUseCase {
   constructor(
@@ -43,6 +46,11 @@ export class AuthenticateUseCase {
       subscription: account.subscriptionId.toString(),
     });
 
-    return right({ token });
+    return right({
+      token,
+      id: account.id.toString(),
+      name: account.name,
+      profilePicture: account.profilePictureUrl,
+    });
   }
 }

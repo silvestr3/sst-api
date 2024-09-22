@@ -15,4 +15,13 @@ export class AuthenticateDTO {
 export class AuthenticateResponseDTO {
   @ApiProperty()
   token: string;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  profilePicture: string;
+
+  @ApiProperty()
+  id: string;
 }

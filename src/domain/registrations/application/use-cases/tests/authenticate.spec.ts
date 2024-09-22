@@ -1,4 +1,3 @@
-import { CreateAdministratorAccountUseCase } from '../create-administrator-account';
 import { FakeAdministratorsRepository } from 'test/repositories/fake-administrators-repository';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 import { Cpf } from '@/domain/registrations/enterprise/entities/value-objects/cpf';
@@ -38,9 +37,11 @@ describe('Authenticate tests', () => {
     });
 
     expect(result.isRight()).toBeTruthy();
-    expect(result.value).toEqual({
-      token: expect.any(String),
-    });
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        token: expect.any(String),
+      }),
+    );
   });
 
   it('Should not be able to authenticate with incorrect credentials', async () => {

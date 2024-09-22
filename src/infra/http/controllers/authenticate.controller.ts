@@ -54,8 +54,8 @@ export class AuthenticateController {
       }
     }
 
-    const { token } = result.value;
+    const { token, name, profilePicture, id } = result.value;
 
-    return { token };
+    return { token, name, profilePicture, id };
   }
 }
