@@ -39,6 +39,8 @@ import { LinkAddressToBranchController } from './controllers/link-address-to-bra
 import { LinkAddressToBranchUseCase } from '@/domain/registrations/application/use-cases/link-address-to-branch';
 import { EditBranchController } from './controllers/edit-branch.controller';
 import { EditBranchUseCase } from '@/domain/registrations/application/use-cases/edit-branch';
+import { CreatePositionController } from './controllers/create-position.controller';
+import { CreatePositionUseCase } from '@/domain/registrations/application/use-cases/create-position';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -62,6 +64,7 @@ import { EditBranchUseCase } from '@/domain/registrations/application/use-cases/
     FetchBranchesByEmployerIdUseCase,
     LinkAddressToBranchUseCase,
     EditBranchUseCase,
+    CreatePositionUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -83,6 +86,7 @@ import { EditBranchUseCase } from '@/domain/registrations/application/use-cases/
     FetchBranchesByEmployerIdController,
     LinkAddressToBranchController,
     EditBranchController,
+    CreatePositionController,
   ],
 })
 export class HttpModule {}

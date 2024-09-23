@@ -8,6 +8,7 @@ import { PositionsRepository } from '../repositories/positions-repository';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Employer } from '../../enterprise/entities/employer';
 import { EmployersRepository } from '../repositories/employers-repository';
+import { Injectable } from '@nestjs/common';
 
 interface CreatePositionParams {
   subscriptionId: string;
@@ -24,6 +25,7 @@ type CreatePositionResponse = Either<
   { position: Position }
 >;
 
+@Injectable()
 export class CreatePositionUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
