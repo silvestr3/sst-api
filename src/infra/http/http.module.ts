@@ -31,6 +31,8 @@ import { EditDepartmentController } from './controllers/edit-department.controll
 import { EditDepartmentUseCase } from '@/domain/registrations/application/use-cases/edit-department';
 import { FetchDepartmentsByEmployerIdController } from './controllers/fetch-departments-by-employer-id.controller';
 import { FetchDepartmentsByEmployerIdUseCase } from '@/domain/registrations/application/use-cases/fetch-departments-by-employer-id';
+import { CreateBranchController } from './controllers/create-branch.controller';
+import { CreateBranchUseCase } from '@/domain/registrations/application/use-cases/create-branch';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -50,6 +52,7 @@ import { FetchDepartmentsByEmployerIdUseCase } from '@/domain/registrations/appl
     CreateDepartmentUseCase,
     EditDepartmentUseCase,
     FetchDepartmentsByEmployerIdUseCase,
+    CreateBranchUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -67,6 +70,7 @@ import { FetchDepartmentsByEmployerIdUseCase } from '@/domain/registrations/appl
     CreateDepartmentController,
     EditDepartmentController,
     FetchDepartmentsByEmployerIdController,
+    CreateBranchController,
   ],
 })
 export class HttpModule {}

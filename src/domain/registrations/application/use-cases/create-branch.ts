@@ -10,6 +10,7 @@ import { BranchesRepository } from '../repositories/branches-repository';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Employer } from '../../enterprise/entities/employer';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { Injectable } from '@nestjs/common';
 
 interface CreateBranchParams {
   subscriptionId: string;
@@ -24,6 +25,7 @@ type CreateBranchResponse = Either<
   { branch: Branch }
 >;
 
+@Injectable()
 export class CreateBranchUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
