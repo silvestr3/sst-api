@@ -8,6 +8,7 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { validateSubscription } from './util/validate-subscription';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Employer } from '../../enterprise/entities/employer';
+import { Injectable } from '@nestjs/common';
 
 interface CreateDepartmentParams {
   subscriptionId: string;
@@ -21,7 +22,7 @@ type CreateDepartmentResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   { department: Department }
 >;
-
+@Injectable()
 export class CreateDepartmentUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
