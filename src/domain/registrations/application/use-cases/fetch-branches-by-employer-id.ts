@@ -8,6 +8,7 @@ import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { BranchesRepository } from '../repositories/branches-repository';
 import { Branch } from '../../enterprise/entities/branch';
 import { EmployersRepository } from '../repositories/employers-repository';
+import { Injectable } from '@nestjs/common';
 
 interface FetchBranchesByEmployerIdParams {
   subscriptionId: string;
@@ -20,6 +21,7 @@ type FetchBranchesByEmployerIdResponse = Either<
   { branches: Branch[] }
 >;
 
+@Injectable()
 export class FetchBranchesByEmployerIdUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
