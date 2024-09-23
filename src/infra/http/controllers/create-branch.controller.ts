@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   NotFoundException,
+  Param,
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -25,12 +26,13 @@ import {
 } from '../dto/create-branch.dto';
 import { BranchPresenter } from '../presenters/branch-presenter';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { IsValidUUIDPipe } from '../pipes/is-valid-uuid.pipe';
 
-@Controller('/branches')
+@Controller('/employers/:employerId/branches')
 export class CreateBranchController {
   constructor(private createBranch: CreateBranchUseCase) {}
 
-  @ApiTags('Branches')
+  @ApiTags('Employers')
   @ApiCreatedResponse({
     type: CreateBranchResponse,
     description: 'New Branch',
@@ -49,8 +51,9 @@ export class CreateBranchController {
   async handle(
     @CurrentUser() user: UserPayload,
     @Body() body: CreateBranchDTO,
+    @Param('employerId', new IsValidUUIDPipe('employerId')) employerId: string,
   ) {
-    const { employerId, name, addressId } = body;
+    const { name, addressId } = body;
     const { sub, subscription } = user;
 
     const result = await this.createBranch.execute({

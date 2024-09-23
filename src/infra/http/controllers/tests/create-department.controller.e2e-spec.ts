@@ -39,7 +39,7 @@ describe('Create department (e2e)', () => {
     await app.init();
   });
 
-  test('[POST] /departments', async () => {
+  test('[POST] /employers/:employerId/departments', async () => {
     const { administrator, subscription } =
       await administratorFactory.makePrismaAdministrator();
 
@@ -60,11 +60,12 @@ describe('Create department (e2e)', () => {
       subscription: subscription.id.toString(),
     });
 
+    const employerId = employer.id.toString();
+
     const response = await request(app.getHttpServer())
-      .post('/departments')
+      .post(`/employers/${employerId}/departments`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        employerId: employer.id.toString(),
         name: 'Testing Department',
         description: 'Department for end-to-end tests',
       });

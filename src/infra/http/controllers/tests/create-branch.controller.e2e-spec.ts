@@ -60,11 +60,12 @@ describe('Create branch (e2e)', () => {
       subscription: subscription.id.toString(),
     });
 
+    const employerId = employer.id.toString();
+
     const response = await request(app.getHttpServer())
-      .post('/branches')
+      .post(`/employers/${employerId}/branches`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        employerId: employer.id.toString(),
         name: 'Branch Test',
       });
 

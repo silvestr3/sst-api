@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Param,
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -22,12 +23,13 @@ import {
   CreateDepartmentResponse,
 } from '../dto/create-department.dto';
 import { DepartmentPresenter } from '../presenters/department-presenter';
+import { IsValidUUIDPipe } from '../pipes/is-valid-uuid.pipe';
 
-@Controller('/departments')
+@Controller('/employers/:employerId/departments')
 export class CreateDepartmentController {
   constructor(private createDepartment: CreateDepartmentUseCase) {}
 
-  @ApiTags('Departments')
+  @ApiTags('Employers')
   @ApiCreatedResponse({
     type: CreateDepartmentResponse,
     description: 'New Department',
@@ -46,8 +48,9 @@ export class CreateDepartmentController {
   async handle(
     @CurrentUser() user: UserPayload,
     @Body() body: CreateDepartmentDTO,
+    @Param('employerId', new IsValidUUIDPipe('employerId')) employerId: string,
   ) {
-    const { employerId, description, name } = body;
+    const { description, name } = body;
     const { sub, subscription } = user;
 
     const result = await this.createDepartment.execute({

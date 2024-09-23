@@ -3,10 +3,6 @@ import { IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateBranchDTO {
   @ApiProperty()
-  @IsUUID()
-  employerId: string;
-
-  @ApiProperty()
   @IsString()
   name: string;
 

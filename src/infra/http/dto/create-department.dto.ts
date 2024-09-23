@@ -3,10 +3,6 @@ import { IsString, IsUUID } from 'class-validator';
 
 export class CreateDepartmentDTO {
   @ApiProperty()
-  @IsUUID()
-  employerId: string;
-
-  @ApiProperty()
   @IsString()
   name: string;
 
