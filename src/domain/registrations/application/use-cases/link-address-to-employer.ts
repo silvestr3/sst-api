@@ -2,14 +2,13 @@ import { Either, left, right } from '@/core/either';
 import { SubscriptionsRepository } from '../repositories/subscriptions-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { EmployersRepository } from '../repositories/employers-repository';
-import { DepartmentesRepository } from '../repositories/departments-repository';
-import { Department } from '../../enterprise/entities/department';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
 import { AddressesRepository } from '../repositories/addresses-repository';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Address } from '../../enterprise/entities/address';
 import { Employer } from '../../enterprise/entities/employer';
+import { Injectable } from '@nestjs/common';
 
 interface LinkAddressToEmployerParams {
   subscriptionId: string;
@@ -22,7 +21,7 @@ type LinkAddressToEmployerResponse = Either<
   NotAllowedError | ResourceNotFoundError,
   null
 >;
-
+@Injectable()
 export class LinkAddressToEmployerUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

@@ -23,6 +23,8 @@ import { CreateAddressController } from './controllers/create-address.controller
 import { CreateAddressUseCase } from '@/domain/registrations/application/use-cases/create-address';
 import { EditAddressController } from './controllers/edit-address.controller';
 import { EditAddressUseCase } from '@/domain/registrations/application/use-cases/edit-address';
+import { LinkAddressToEmployerController } from './controllers/link-address-to-employer.controller';
+import { LinkAddressToEmployerUseCase } from '@/domain/registrations/application/use-cases/link-address-to-employer';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -38,6 +40,7 @@ import { EditAddressUseCase } from '@/domain/registrations/application/use-cases
     InactivateEmployerUseCase,
     CreateAddressUseCase,
     EditAddressUseCase,
+    LinkAddressToEmployerUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -51,6 +54,7 @@ import { EditAddressUseCase } from '@/domain/registrations/application/use-cases
     InactivateEmployerController,
     CreateAddressController,
     EditAddressController,
+    LinkAddressToEmployerController,
   ],
 })
 export class HttpModule {}
