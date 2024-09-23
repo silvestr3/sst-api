@@ -6,6 +6,7 @@ import { Department } from '../../enterprise/entities/department';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Injectable } from '@nestjs/common';
 
 interface EditDepartmentParams {
   subscriptionId: string;
@@ -20,6 +21,7 @@ type EditDepartmentResponse = Either<
   { department: Department }
 >;
 
+@Injectable()
 export class EditDepartmentUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

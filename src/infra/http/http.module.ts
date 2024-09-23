@@ -27,6 +27,8 @@ import { LinkAddressToEmployerController } from './controllers/link-address-to-e
 import { LinkAddressToEmployerUseCase } from '@/domain/registrations/application/use-cases/link-address-to-employer';
 import { CreateDepartmentController } from './controllers/create-department.controller';
 import { CreateDepartmentUseCase } from '@/domain/registrations/application/use-cases/create-department';
+import { EditDepartmentController } from './controllers/edit-department.controller';
+import { EditDepartmentUseCase } from '@/domain/registrations/application/use-cases/edit-department';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -44,6 +46,7 @@ import { CreateDepartmentUseCase } from '@/domain/registrations/application/use-
     EditAddressUseCase,
     LinkAddressToEmployerUseCase,
     CreateDepartmentUseCase,
+    EditDepartmentUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -59,6 +62,7 @@ import { CreateDepartmentUseCase } from '@/domain/registrations/application/use-
     EditAddressController,
     LinkAddressToEmployerController,
     CreateDepartmentController,
+    EditDepartmentController,
   ],
 })
 export class HttpModule {}

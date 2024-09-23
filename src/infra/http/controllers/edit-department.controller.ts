@@ -6,6 +6,7 @@ import {
   NotFoundException,
   Param,
   Patch,
+  Post,
   UnauthorizedException,
 } from '@nestjs/common';
 import {
@@ -13,7 +14,6 @@ import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
-  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -21,44 +21,45 @@ import {
 import { CurrentUser } from '@/infra/auth/current-user.decorator';
 import { UserPayload } from '@/infra/auth/jwt-strategy';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
-import { EditGroupUseCase } from '@/domain/registrations/application/use-cases/edit-group';
-import { EditGroupDTO } from '../dto/edit-group.dto';
-import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { DepartmentPresenter } from '../presenters/department-presenter';
+import { EditDepartmentUseCase } from '@/domain/registrations/application/use-cases/edit-department';
+import { EditDepartmentDTO } from '../dto/edit-department.dto';
 import { IsValidUUIDPipe } from '../pipes/is-valid-uuid.pipe';
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 
-@Controller('/groups/:groupId')
-export class EditGroupController {
-  constructor(private editGroupUseCase: EditGroupUseCase) {}
+@Controller('/departments/:departmentId')
+export class EditDepartmentController {
+  constructor(private editDepartment: EditDepartmentUseCase) {}
 
-  @ApiTags('Groups')
-  @ApiBearerAuth()
+  @ApiTags('Departments')
   @ApiNoContentResponse()
   @ApiUnauthorizedResponse({
-    description: 'User not authorized to perform this action',
+    description: 'User is not allowed to perform this action',
   })
   @ApiNotFoundResponse({
-    description: 'Group not found',
+    description: 'Department was not found',
   })
   @ApiOperation({
-    summary: 'Edit a group by ID',
+    summary: 'Edit department',
   })
+  @ApiBearerAuth()
   @HttpCode(204)
   @Patch()
   async handle(
     @CurrentUser() user: UserPayload,
-    @Param('groupId', new IsValidUUIDPipe('groupId')) groupId: string,
-    @Body() body: EditGroupDTO,
+    @Param('departmentId', new IsValidUUIDPipe('departmentId'))
+    departmentId: string,
+    @Body() body: EditDepartmentDTO,
   ) {
-    const { name, description, isActive } = body;
+    const { description, name } = body;
     const { sub, subscription } = user;
 
-    const result = await this.editGroupUseCase.execute({
+    const result = await this.editDepartment.execute({
       subscriptionId: subscription,
       executorId: sub,
-      groupId,
+      departmentId,
       name,
       description,
-      isActive,
     });
 
     if (result.isLeft()) {
