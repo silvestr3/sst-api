@@ -8,6 +8,7 @@ import { AddressesRepository } from '../repositories/addresses-repository';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Branch } from '../../enterprise/entities/branch';
 import { Address } from '../../enterprise/entities/address';
+import { Injectable } from '@nestjs/common';
 
 interface LinkAddressToBranchParams {
   subscriptionId: string;
@@ -21,6 +22,7 @@ type LinkAddressToBranchResponse = Either<
   null
 >;
 
+@Injectable()
 export class LinkAddressToBranchUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

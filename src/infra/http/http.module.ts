@@ -35,6 +35,8 @@ import { CreateBranchController } from './controllers/create-branch.controller';
 import { CreateBranchUseCase } from '@/domain/registrations/application/use-cases/create-branch';
 import { FetchBranchesByEmployerIdController } from './controllers/fetch-branches-by-employer-id.controller';
 import { FetchBranchesByEmployerIdUseCase } from '@/domain/registrations/application/use-cases/fetch-branches-by-employer-id';
+import { LinkAddressToBranchController } from './controllers/link-address-to-branch.controller';
+import { LinkAddressToBranchUseCase } from '@/domain/registrations/application/use-cases/link-address-to-branch';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -56,6 +58,7 @@ import { FetchBranchesByEmployerIdUseCase } from '@/domain/registrations/applica
     FetchDepartmentsByEmployerIdUseCase,
     CreateBranchUseCase,
     FetchBranchesByEmployerIdUseCase,
+    LinkAddressToBranchUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -75,6 +78,7 @@ import { FetchBranchesByEmployerIdUseCase } from '@/domain/registrations/applica
     FetchDepartmentsByEmployerIdController,
     CreateBranchController,
     FetchBranchesByEmployerIdController,
+    LinkAddressToBranchController,
   ],
 })
 export class HttpModule {}
