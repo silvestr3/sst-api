@@ -39,7 +39,7 @@ describe('Inactivate employer (e2e)', () => {
     await app.init();
   });
 
-  test('[DELETE] /employers/:employerId', async () => {
+  test('[PATCH] /employers/:employerId/inactivate', async () => {
     const { administrator, subscription } =
       await administratorFactory.makePrismaAdministrator();
 
@@ -64,7 +64,7 @@ describe('Inactivate employer (e2e)', () => {
     const employerId = employer.id.toString();
 
     const response = await request(app.getHttpServer())
-      .delete(`/employers/${employerId}`)
+      .patch(`/employers/${employerId}/inactivate`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 

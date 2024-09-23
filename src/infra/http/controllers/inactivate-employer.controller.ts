@@ -5,6 +5,7 @@ import {
   HttpCode,
   NotFoundException,
   Param,
+  Patch,
   UnauthorizedException,
 } from '@nestjs/common';
 import {
@@ -22,7 +23,7 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { InactivateEmployerUseCase } from '@/domain/registrations/application/use-cases/inactivate-employer';
 import { IsValidUUIDPipe } from '../pipes/is-valid-uuid.pipe';
 
-@Controller('/employers/:employerId')
+@Controller('/employers/:employerId/inactivate')
 export class InactivateEmployerController {
   constructor(private inactivateEmployerUseCase: InactivateEmployerUseCase) {}
 
@@ -38,7 +39,7 @@ export class InactivateEmployerController {
   @ApiOperation({
     summary: 'Inactivate an employer',
   })
-  @Delete()
+  @Patch()
   @HttpCode(204)
   async handle(
     @CurrentUser() user: UserPayload,
