@@ -8,6 +8,7 @@ import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { DepartmentesRepository } from '../repositories/departments-repository';
 import { Department } from '../../enterprise/entities/department';
 import { EmployersRepository } from '../repositories/employers-repository';
+import { Injectable } from '@nestjs/common';
 
 interface FetchDepartmentsByEmployerIdParams {
   subscriptionId: string;
@@ -20,6 +21,7 @@ type FetchDepartmentsByEmployerIdResponse = Either<
   { departments: Department[] }
 >;
 
+@Injectable()
 export class FetchDepartmentsByEmployerIdUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
