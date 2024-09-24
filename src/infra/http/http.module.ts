@@ -53,6 +53,8 @@ import { LinkDoctorToEmployerController } from './controllers/link-doctor-to-emp
 import { LinkDoctorToEmployerUseCase } from '@/domain/registrations/application/use-cases/link-doctor-to-employer';
 import { CreateEmployeeController } from './controllers/create-employee.controller';
 import { CreateEmployeeUseCase } from '@/domain/registrations/application/use-cases/create-employee';
+import { EditEmployeeController } from './controllers/edit-employee.controller';
+import { EditEmployeeUseCase } from '@/domain/registrations/application/use-cases/edit-employee';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -83,6 +85,7 @@ import { CreateEmployeeUseCase } from '@/domain/registrations/application/use-ca
     EditDoctorUseCase,
     LinkDoctorToEmployerUseCase,
     CreateEmployeeUseCase,
+    EditEmployeeUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -111,6 +114,7 @@ import { CreateEmployeeUseCase } from '@/domain/registrations/application/use-ca
     CreateDoctorController,
     EditDoctorController,
     CreateEmployeeController,
+    EditEmployeeController,
   ],
 })
 export class HttpModule {}

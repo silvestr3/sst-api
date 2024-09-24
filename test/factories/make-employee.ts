@@ -4,7 +4,10 @@ import {
   EmployeeProps,
 } from '@/domain/registrations/enterprise/entities/employee';
 import { Cpf } from '@/domain/registrations/enterprise/entities/value-objects/cpf';
+import { PrismaEmployeeMapper } from '@/infra/database/prisma/mappers/prisma-employee-mapper';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 export function makeEmployee(
@@ -33,4 +36,22 @@ export function makeEmployee(
   );
 
   return employee;
+}
+
+@Injectable()
+export class EmployeeFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaEmployee(data: Partial<EmployeeProps> = {}) {
+    const employee = makeEmployee({
+      ...data,
+    });
+
+    const dataEmployee = PrismaEmployeeMapper.toPrisma(employee);
+    await this.prisma.employee.create({
+      data: dataEmployee,
+    });
+
+    return { employee };
+  }
 }

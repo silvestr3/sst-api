@@ -9,6 +9,7 @@ import { InvalidInformationError } from './errors/invalid-information-error';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Cpf } from '../../enterprise/entities/value-objects/cpf';
 import { MissingInformationError } from './errors/missing-information-error';
+import { Injectable } from '@nestjs/common';
 
 interface EditEmployeeParams {
   subscriptionId: string;
@@ -33,6 +34,7 @@ type EditEmployeeResponse = Either<
   { employee: Employee }
 >;
 
+@Injectable()
 export class EditEmployeeUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
@@ -97,6 +99,8 @@ export class EditEmployeeUseCase {
     employee.gender = gender ?? employee.gender;
     employee.email = email ?? employee.email;
     employee.status = status ?? employee.status;
+
+    await this.employeesRepository.save(employee);
 
     return right({ employee });
   }
