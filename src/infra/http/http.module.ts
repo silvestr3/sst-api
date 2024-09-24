@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../database/database.module';
-import { CreateAdministratorAccountUseCase } from '@/domain/registrations/application/use-cases/create-administrator-account';
 import { CryptographyModule } from '../cryptography/cryptography.module';
+import { CreateAdministratorAccountUseCase } from '@/domain/registrations/application/use-cases/create-administrator-account';
 import { CreateAdministratorAccountController } from './controllers/create-account.controller';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { AuthenticateUseCase } from '@/domain/registrations/application/use-cases/authenticate';
@@ -43,6 +43,8 @@ import { CreatePositionController } from './controllers/create-position.controll
 import { CreatePositionUseCase } from '@/domain/registrations/application/use-cases/create-position';
 import { EditPositionController } from './controllers/edit-position.controller';
 import { EditPositionUseCase } from '@/domain/registrations/application/use-cases/edit-position';
+import { FetchPositionsByEmployerIdController } from './controllers/fetch-positions-by-employer-id.controller';
+import { FetchPositionsByEmployerIdUseCase } from '@/domain/registrations/application/use-cases/fetch-positions-by-employer-id';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -68,6 +70,7 @@ import { EditPositionUseCase } from '@/domain/registrations/application/use-case
     EditBranchUseCase,
     CreatePositionUseCase,
     EditPositionUseCase,
+    FetchPositionsByEmployerIdUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -91,6 +94,7 @@ import { EditPositionUseCase } from '@/domain/registrations/application/use-case
     EditBranchController,
     CreatePositionController,
     EditPositionController,
+    FetchPositionsByEmployerIdController,
   ],
 })
 export class HttpModule {}
