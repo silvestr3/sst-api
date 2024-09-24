@@ -49,6 +49,8 @@ import { CreateDoctorController } from './controllers/create-doctor.controller';
 import { CreateDoctorUseCase } from '@/domain/registrations/application/use-cases/create-doctor';
 import { EditDoctorController } from './controllers/edit-doctor.controller';
 import { EditDoctorUseCase } from '@/domain/registrations/application/use-cases/edit-doctor';
+import { LinkDoctorToEmployerController } from './controllers/link-doctor-to-employer.controller';
+import { LinkDoctorToEmployerUseCase } from '@/domain/registrations/application/use-cases/link-doctor-to-employer';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -77,6 +79,7 @@ import { EditDoctorUseCase } from '@/domain/registrations/application/use-cases/
     FetchPositionsByEmployerIdUseCase,
     CreateDoctorUseCase,
     EditDoctorUseCase,
+    LinkDoctorToEmployerUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -91,6 +94,7 @@ import { EditDoctorUseCase } from '@/domain/registrations/application/use-cases/
     CreateAddressController,
     EditAddressController,
     LinkAddressToEmployerController,
+    LinkDoctorToEmployerController,
     CreateDepartmentController,
     EditDepartmentController,
     FetchDepartmentsByEmployerIdController,

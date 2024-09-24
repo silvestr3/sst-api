@@ -8,6 +8,7 @@ import { DoctorsRepository } from '../repositories/doctors-repository';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
 import { Employer } from '../../enterprise/entities/employer';
 import { Doctor } from '../../enterprise/entities/doctor';
+import { Injectable } from '@nestjs/common';
 
 interface LinkDoctorToEmployerParams {
   subscriptionId: string;
@@ -21,6 +22,7 @@ type LinkDoctorToEmployerResponse = Either<
   null
 >;
 
+@Injectable()
 export class LinkDoctorToEmployerUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
