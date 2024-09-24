@@ -6,6 +6,7 @@ import { validateSubscription } from './util/validate-subscription';
 import { Doctor } from '../../enterprise/entities/doctor';
 import { DoctorsRepository } from '../repositories/doctors-repository';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Injectable } from '@nestjs/common';
 
 interface EditDoctorParams {
   subscriptionId: string;
@@ -22,6 +23,7 @@ type EditDoctorResponse = Either<
   { doctor: Doctor }
 >;
 
+@Injectable()
 export class EditDoctorUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

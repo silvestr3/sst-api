@@ -3,7 +3,10 @@ import {
   Doctor,
   DoctorProps,
 } from '@/domain/registrations/enterprise/entities/doctor';
+import { PrismaDoctorMapper } from '@/infra/database/prisma/mappers/prisma-doctor-mapper';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 export function makeDoctor(
@@ -23,4 +26,22 @@ export function makeDoctor(
   );
 
   return doctor;
+}
+
+@Injectable()
+export class DoctorFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaDoctor(data: Partial<DoctorProps> = {}) {
+    const doctor = makeDoctor({
+      ...data,
+    });
+
+    const dataDoctor = PrismaDoctorMapper.toPrisma(doctor);
+    await this.prisma.doctor.create({
+      data: dataDoctor,
+    });
+
+    return { doctor };
+  }
 }

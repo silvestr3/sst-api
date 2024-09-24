@@ -47,6 +47,8 @@ import { FetchPositionsByEmployerIdController } from './controllers/fetch-positi
 import { FetchPositionsByEmployerIdUseCase } from '@/domain/registrations/application/use-cases/fetch-positions-by-employer-id';
 import { CreateDoctorController } from './controllers/create-doctor.controller';
 import { CreateDoctorUseCase } from '@/domain/registrations/application/use-cases/create-doctor';
+import { EditDoctorController } from './controllers/edit-doctor.controller';
+import { EditDoctorUseCase } from '@/domain/registrations/application/use-cases/edit-doctor';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -74,6 +76,7 @@ import { CreateDoctorUseCase } from '@/domain/registrations/application/use-case
     EditPositionUseCase,
     FetchPositionsByEmployerIdUseCase,
     CreateDoctorUseCase,
+    EditDoctorUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -99,6 +102,7 @@ import { CreateDoctorUseCase } from '@/domain/registrations/application/use-case
     EditPositionController,
     FetchPositionsByEmployerIdController,
     CreateDoctorController,
+    EditDoctorController,
   ],
 })
 export class HttpModule {}
