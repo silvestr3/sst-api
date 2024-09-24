@@ -19,4 +19,12 @@ export class FakeDoctorsRepository implements DoctorsRepository {
 
     this.items[index] = doctor;
   }
+
+  async findAll(subscriptionId: string): Promise<Doctor[]> {
+    const doctors = this.items.filter(
+      (item) => item.subscriptionId.toString() === subscriptionId,
+    );
+
+    return doctors;
+  }
 }

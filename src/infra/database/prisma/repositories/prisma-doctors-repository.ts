@@ -7,7 +7,6 @@ import { PrismaDoctorMapper } from '../mappers/prisma-doctor-mapper';
 @Injectable()
 export class PrismaDoctorsRepository implements DoctorsRepository {
   constructor(private prisma: PrismaService) {}
-
   async findById(id: string): Promise<Doctor | null> {
     const doctor = await this.prisma.doctor.findUnique({
       where: {
@@ -37,5 +36,15 @@ export class PrismaDoctorsRepository implements DoctorsRepository {
         id: data.id,
       },
     });
+  }
+
+  async findAll(subscriptionId: string): Promise<Doctor[]> {
+    const doctors = await this.prisma.doctor.findMany({
+      where: {
+        subscriptionId,
+      },
+    });
+
+    return doctors.map(PrismaDoctorMapper.toDomain);
   }
 }
