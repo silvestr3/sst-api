@@ -6,6 +6,7 @@ import { Position } from '../../enterprise/entities/position';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { PositionsRepository } from '../repositories/positions-repository';
 import { validateResourceOwnership } from './util/validate-resource-ownership';
+import { Injectable } from '@nestjs/common';
 
 interface EditPositionParams {
   subscriptionId: string;
@@ -22,6 +23,7 @@ type EditPositionResponse = Either<
   { position: Position }
 >;
 
+@Injectable()
 export class EditPositionUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,

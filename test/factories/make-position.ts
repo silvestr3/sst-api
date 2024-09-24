@@ -3,7 +3,10 @@ import {
   Position,
   PositionProps,
 } from '@/domain/registrations/enterprise/entities/position';
+import { PrismaPositionMapper } from '@/infra/database/prisma/mappers/prisma-position-mapper';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { faker } from '@faker-js/faker';
+import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 export function makePosition(
@@ -24,4 +27,22 @@ export function makePosition(
   );
 
   return position;
+}
+
+@Injectable()
+export class PositionFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaPosition(data: Partial<PositionProps> = {}) {
+    const position = makePosition({
+      ...data,
+    });
+
+    const dataPosition = PrismaPositionMapper.toPrisma(position);
+    await this.prisma.position.create({
+      data: dataPosition,
+    });
+
+    return { position };
+  }
 }
