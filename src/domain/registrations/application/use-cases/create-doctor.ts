@@ -1,10 +1,10 @@
 import { Either, left, right } from '@/core/either';
 import { SubscriptionsRepository } from '../repositories/subscriptions-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
-import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
 import { Doctor } from '../../enterprise/entities/doctor';
 import { DoctorsRepository } from '../repositories/doctors-repository';
+import { Injectable } from '@nestjs/common';
 
 interface CreateDoctorParams {
   subscriptionId: string;
@@ -17,6 +17,7 @@ interface CreateDoctorParams {
 
 type CreateDoctorResponse = Either<NotAllowedError, { doctor: Doctor }>;
 
+@Injectable()
 export class CreateDoctorUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
