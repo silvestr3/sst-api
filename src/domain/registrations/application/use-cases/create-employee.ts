@@ -20,6 +20,7 @@ import { Cpf } from '../../enterprise/entities/value-objects/cpf';
 import { InvalidInformationError } from './errors/invalid-information-error';
 import { MissingInformationError } from './errors/missing-information-error';
 import { ConflictInformationError } from './errors/conflict-information-error';
+import { Injectable } from '@nestjs/common';
 
 interface CreateEmployeeParams {
   subscriptionId: string;
@@ -48,6 +49,7 @@ type CreateEmployeeResponse = Either<
   { employee: Employee }
 >;
 
+@Injectable()
 export class CreateEmployeeUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
