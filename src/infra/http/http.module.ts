@@ -57,6 +57,8 @@ import { EditEmployeeController } from './controllers/edit-employee.controller';
 import { EditEmployeeUseCase } from '@/domain/registrations/application/use-cases/edit-employee';
 import { FetchAllDoctorsController } from './controllers/fetch-all-doctors.controller';
 import { FetchAllDoctorsUseCase } from '@/domain/registrations/application/use-cases/fetch-all-doctors';
+import { FetchEmployeesByEmployerIdController } from './controllers/fetch-employees-by-employer-id.controller';
+import { FetchEmployeesByEmployerIdUseCase } from '@/domain/registrations/application/use-cases/fetch-employees-by-employer-id';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -89,6 +91,7 @@ import { FetchAllDoctorsUseCase } from '@/domain/registrations/application/use-c
     CreateEmployeeUseCase,
     EditEmployeeUseCase,
     FetchAllDoctorsUseCase,
+    FetchEmployeesByEmployerIdUseCase,
   ],
   controllers: [
     CreateAdministratorAccountController,
@@ -119,6 +122,7 @@ import { FetchAllDoctorsUseCase } from '@/domain/registrations/application/use-c
     CreateEmployeeController,
     EditEmployeeController,
     FetchAllDoctorsController,
+    FetchEmployeesByEmployerIdController,
   ],
 })
 export class HttpModule {}

@@ -19,4 +19,12 @@ export class FakeEmployeesRepository implements EmployeesRepository {
 
     return employee ?? null;
   }
+
+  async fetchByEmployerId(employerId: string): Promise<Employee[]> {
+    const employees = this.items.filter(
+      (item) => item.employerId.toString() === employerId,
+    );
+
+    return employees;
+  }
 }
