@@ -94,35 +94,52 @@ import { FetchEmployeesByEmployerIdUseCase } from '@/domain/registrations/applic
     FetchEmployeesByEmployerIdUseCase,
   ],
   controllers: [
+    // ACCOUNTS
     CreateAdministratorAccountController,
     AuthenticateController,
+
+    // GROUPS
     CreateGroupController,
     FetchAllGroupsController,
     DeleteGroupController,
     EditGroupController,
-    CreateEmployerController,
     FetchEmployersByGroupIdController,
+
+    // EMPLOYERS
+    CreateEmployerController,
     InactivateEmployerController,
-    CreateAddressController,
-    EditAddressController,
     LinkAddressToEmployerController,
     LinkDoctorToEmployerController,
     CreateDepartmentController,
-    EditDepartmentController,
-    FetchDepartmentsByEmployerIdController,
     CreateBranchController,
+    CreatePositionController,
+    CreateEmployeeController,
+    FetchDepartmentsByEmployerIdController,
     FetchBranchesByEmployerIdController,
+    FetchPositionsByEmployerIdController,
+    FetchEmployeesByEmployerIdController,
+
+    // DEPARTMENTS
+    EditDepartmentController,
+
+    // BRANCHES
     LinkAddressToBranchController,
     EditBranchController,
-    CreatePositionController,
+
+    // POSITIONS
     EditPositionController,
-    FetchPositionsByEmployerIdController,
+
+    // EMPLOYEES
+    EditEmployeeController,
+
+    // DOCTORS
+    FetchAllDoctorsController,
     CreateDoctorController,
     EditDoctorController,
-    CreateEmployeeController,
-    EditEmployeeController,
-    FetchAllDoctorsController,
-    FetchEmployeesByEmployerIdController,
+
+    // ADDRESSES
+    CreateAddressController,
+    EditAddressController,
   ],
 })
 export class HttpModule {}
