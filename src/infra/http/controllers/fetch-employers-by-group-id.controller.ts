@@ -22,6 +22,7 @@ import { FetchEmployersByGroupIdResponse } from '../dto/fetch-employers-by-group
 import { EmployerPresenter } from '../presenters/employer-presenter';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { IsValidUUIDPipe } from '../pipes/is-valid-uuid.pipe';
+import { GroupPresenter } from '../presenters/group-presenter';
 
 @Controller('/groups/:groupId/employers')
 export class FetchEmployersByGroupIdController {
@@ -67,10 +68,11 @@ export class FetchEmployersByGroupIdController {
       }
     }
 
-    const { employers } = result.value;
+    const { group, employers } = result.value;
 
     const presenterEmployers = employers.map(EmployerPresenter.toHttp);
+    const presenterGroup = GroupPresenter.toHttp(group);
 
-    return { employers: presenterEmployers };
+    return { group: presenterGroup, employers: presenterEmployers };
   }
 }

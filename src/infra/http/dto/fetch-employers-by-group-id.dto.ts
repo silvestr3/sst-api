@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { GroupObject } from './fetch-all-groups.dto';
 
 export enum eSocialEnrollmentTypeValues {
   CPF = 'CPF',
@@ -55,6 +56,9 @@ export class EmployerObject {
 }
 
 export class FetchEmployersByGroupIdResponse {
+  @ApiProperty({ type: GroupObject, isArray: false })
+  group: GroupObject;
+
   @ApiProperty({ type: EmployerObject, isArray: true })
-  employers: EmployerObject;
+  employers: EmployerObject[];
 }

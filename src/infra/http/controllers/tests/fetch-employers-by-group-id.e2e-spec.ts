@@ -95,6 +95,9 @@ describe('Fetch employers from group (e2e)', () => {
     expect(employers).toHaveLength(2);
     expect(response.body).toEqual(
       expect.objectContaining({
+        group: expect.objectContaining({
+          id: group1.id.toString(),
+        }),
         employers: [
           expect.objectContaining({
             nomeFantasia: 'Primeiro',

@@ -18,7 +18,7 @@ interface FetchEmployersByGroupIdParams {
 
 type FetchEmployersByGroupIdResponse = Either<
   NotAllowedError | ResourceNotFoundError,
-  { employers: Employer[] }
+  { group: Group; employers: Employer[] }
 >;
 @Injectable()
 export class FetchEmployersByGroupIdUseCase {
@@ -59,6 +59,6 @@ export class FetchEmployersByGroupIdUseCase {
       group.id.toString(),
     );
 
-    return right({ employers });
+    return right({ group, employers });
   }
 }
