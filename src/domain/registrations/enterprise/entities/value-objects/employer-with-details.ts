@@ -40,6 +40,14 @@ export class EmployerWithDetails extends ValueObject<EmployerWithDetailsProps> {
     return this.props.subscriptionId;
   }
 
+  get employerId() {
+    return this.props.employerId;
+  }
+
+  set employerId(employerId: UniqueEntityID) {
+    this.props.employerId = employerId;
+  }
+
   get eSocialEnrollmentType() {
     return this.props.eSocialEnrollmentType;
   }

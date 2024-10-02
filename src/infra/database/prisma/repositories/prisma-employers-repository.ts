@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaEmployerMapper } from '../mappers/prisma-employer-mapper';
 import { EmployerWithDetails } from '@/domain/registrations/enterprise/entities/value-objects/employer-with-details';
+import { PrismaEmployerWithDetailsMapper } from '../mappers/prisma-employer-details-mapper';
 
 @Injectable()
 export class PrismaEmployersRepository implements EmployersRepository {
@@ -49,7 +50,19 @@ export class PrismaEmployersRepository implements EmployersRepository {
     return employers.map((employer) => PrismaEmployerMapper.toDomain(employer));
   }
 
-  findByIdWithDetails(id: string): Promise<EmployerWithDetails | null> {
-    throw new Error('Method not implemented.');
+  async findByIdWithDetails(id: string): Promise<EmployerWithDetails | null> {
+    const employer = await this.prisma.employer.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        responsibleDoctor: true,
+        address: true,
+      },
+    });
+
+    if (!employer) return null;
+
+    return PrismaEmployerWithDetailsMapper.toDomain(employer);
   }
 }
