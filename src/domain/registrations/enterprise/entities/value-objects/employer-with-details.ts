@@ -1,8 +1,23 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { ValueObject } from '@/core/entities/value-object';
 import { Cpf } from './cpf';
-import { Doctor } from '../doctor';
-import { Address } from '../address';
+
+export interface DoctorInfo {
+  doctorId: UniqueEntityID;
+  name: string;
+  phone: string;
+}
+
+export interface AddressInfo {
+  addressId: UniqueEntityID;
+  cep: string;
+  street: string;
+  complement?: string;
+  number?: string;
+  district: string;
+  city: string;
+  state: string;
+}
 
 export interface EmployerWithDetailsProps {
   subscriptionId: UniqueEntityID;
@@ -16,8 +31,8 @@ export interface EmployerWithDetailsProps {
   activity: string;
   riskLevel: number;
   isActive: boolean;
-  responsibleDoctor: Doctor | null;
-  address: Address | null;
+  responsibleDoctor: DoctorInfo | null;
+  address: AddressInfo | null;
 }
 
 export class EmployerWithDetails extends ValueObject<EmployerWithDetailsProps> {
@@ -93,7 +108,7 @@ export class EmployerWithDetails extends ValueObject<EmployerWithDetailsProps> {
     return this.props.responsibleDoctor;
   }
 
-  set responsibleDoctor(responsibleDoctor: Doctor) {
+  set responsibleDoctor(responsibleDoctor: DoctorInfo) {
     this.props.responsibleDoctor = responsibleDoctor;
   }
 
@@ -109,7 +124,7 @@ export class EmployerWithDetails extends ValueObject<EmployerWithDetailsProps> {
     return this.props.address;
   }
 
-  set address(address: Address) {
+  set address(address: AddressInfo) {
     this.props.address = address;
   }
 

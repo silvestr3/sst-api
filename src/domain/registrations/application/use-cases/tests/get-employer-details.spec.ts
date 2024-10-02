@@ -7,8 +7,6 @@ import { FakeDoctorsRepository } from 'test/repositories/fake-doctors-repository
 import { makeDoctor } from 'test/factories/make-doctor';
 import { makeAddress } from 'test/factories/make-address';
 import { GetEmployerDetailsUseCase } from '../get-employer-details';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { EmployerWithDetails } from '@/domain/registrations/enterprise/entities/value-objects/employer-with-details';
 
 describe('get employer details tests', () => {
   let subscriptionsRepository: FakeSubscriptionsRepository;
@@ -70,8 +68,12 @@ describe('get employer details tests', () => {
         employer: expect.objectContaining({
           props: expect.objectContaining({
             employerId: employer.id,
-            address,
-            responsibleDoctor: doctor,
+            address: expect.objectContaining({
+              addressId: address.id,
+            }),
+            responsibleDoctor: expect.objectContaining({
+              doctorId: doctor.id,
+            }),
           }),
         }),
       }),

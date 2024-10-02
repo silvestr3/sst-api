@@ -72,8 +72,25 @@ export class FakeEmployersRepository implements EmployersRepository {
       cnae: employer.cnae,
       isActive: employer.isActive,
       riskLevel: employer.riskLevel,
-      address: address ?? null,
-      responsibleDoctor: doctor ?? null,
+      address: address
+        ? {
+            addressId: address.id,
+            cep: address.cep,
+            city: address.city,
+            district: address.district,
+            state: address.state,
+            street: address.street,
+            complement: address.complement,
+            number: address.number,
+          }
+        : null,
+      responsibleDoctor: doctor
+        ? {
+            doctorId: doctor.id,
+            name: doctor.name,
+            phone: doctor.phone,
+          }
+        : null,
     });
   }
 }

@@ -3,11 +3,11 @@ import { Employer } from '@/domain/registrations/enterprise/entities/employer';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaEmployerMapper } from '../mappers/prisma-employer-mapper';
+import { EmployerWithDetails } from '@/domain/registrations/enterprise/entities/value-objects/employer-with-details';
 
 @Injectable()
 export class PrismaEmployersRepository implements EmployersRepository {
   constructor(private prisma: PrismaService) {}
-
   async create(employer: Employer): Promise<void> {
     const data = PrismaEmployerMapper.toPrisma(employer);
 
@@ -47,5 +47,9 @@ export class PrismaEmployersRepository implements EmployersRepository {
     });
 
     return employers.map((employer) => PrismaEmployerMapper.toDomain(employer));
+  }
+
+  findByIdWithDetails(id: string): Promise<EmployerWithDetails | null> {
+    throw new Error('Method not implemented.');
   }
 }
