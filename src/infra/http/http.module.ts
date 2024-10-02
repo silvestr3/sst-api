@@ -61,6 +61,8 @@ import { FetchEmployeesByEmployerIdController } from './controllers/fetch-employ
 import { FetchEmployeesByEmployerIdUseCase } from '@/domain/registrations/application/use-cases/fetch-employees-by-employer-id';
 import { GetEmployerDetailsController } from './controllers/get-employer-details.controller';
 import { GetEmployerDetailsUseCase } from '@/domain/registrations/application/use-cases/get-employer-details';
+import { GetDepartmentDetailsController } from './controllers/get-department-details.controller';
+import { GetDepartmentDetailsUseCase } from '@/domain/registrations/application/use-cases/get-department-details';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -95,6 +97,7 @@ import { GetEmployerDetailsUseCase } from '@/domain/registrations/application/us
     FetchAllDoctorsUseCase,
     FetchEmployeesByEmployerIdUseCase,
     GetEmployerDetailsUseCase,
+    GetDepartmentDetailsUseCase,
   ],
   controllers: [
     // ACCOUNTS
@@ -124,6 +127,7 @@ import { GetEmployerDetailsUseCase } from '@/domain/registrations/application/us
     FetchEmployeesByEmployerIdController,
 
     // DEPARTMENTS
+    GetDepartmentDetailsController,
     EditDepartmentController,
 
     // BRANCHES

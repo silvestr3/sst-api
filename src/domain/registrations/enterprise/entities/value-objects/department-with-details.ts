@@ -20,6 +20,14 @@ export class DepartmentWithDetails extends ValueObject<DepartmentWithDetailsProp
     return this.props.subscriptionId;
   }
 
+  get departmentId() {
+    return this.props.departmentId;
+  }
+
+  set departmentId(departmentId: UniqueEntityID) {
+    this.props.departmentId = departmentId;
+  }
+
   get name() {
     return this.props.name;
   }

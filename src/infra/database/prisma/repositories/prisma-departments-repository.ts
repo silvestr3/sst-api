@@ -3,6 +3,8 @@ import { Department } from '@/domain/registrations/enterprise/entities/departmen
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaDepartmentMapper } from '../mappers/prisma-department-mapper';
+import { DepartmentWithDetails } from '@/domain/registrations/enterprise/entities/value-objects/department-with-details';
+import { PrismaDepartmentDetailsMapper } from '../mappers/prisma-department-details-mapper';
 
 @Injectable()
 export class PrismaDepartmentsRepository implements DepartmentesRepository {
@@ -47,5 +49,18 @@ export class PrismaDepartmentsRepository implements DepartmentesRepository {
     return departments.map((department) =>
       PrismaDepartmentMapper.toDomain(department),
     );
+  }
+
+  async findByIdWithDetails(id: string): Promise<DepartmentWithDetails | null> {
+    const department = await this.prisma.department.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        employer: true,
+      },
+    });
+
+    return PrismaDepartmentDetailsMapper.toDomain(department);
   }
 }
