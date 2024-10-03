@@ -61,6 +61,8 @@ export class PrismaDepartmentsRepository implements DepartmentesRepository {
       },
     });
 
+    if (!department) return null;
+
     return PrismaDepartmentDetailsMapper.toDomain(department);
   }
 }

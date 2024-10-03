@@ -52,6 +52,8 @@ export class PrismaBranchesRepository implements BranchesRepository {
       },
     });
 
+    if (!branch) return null;
+
     return PrismaBranchDetailsMapper.toDomain(branch);
   }
 

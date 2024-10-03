@@ -3,6 +3,8 @@ import { Position } from '@/domain/registrations/enterprise/entities/position';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaPositionMapper } from '../mappers/prisma-position-mapper';
+import { PositionWithDetails } from '@/domain/registrations/enterprise/entities/value-objects/position-with-details';
+import { PrismaPositionDetailsMapper } from '../mappers/prisma-position-details-mapper';
 
 @Injectable()
 export class PrismaPositionsRepository implements PositionsRepository {
@@ -35,6 +37,21 @@ export class PrismaPositionsRepository implements PositionsRepository {
     if (!position) return null;
 
     return PrismaPositionMapper.toDomain(position);
+  }
+
+  async findByIdWithDetails(id: string): Promise<PositionWithDetails | null> {
+    const position = await this.prisma.position.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        employer: true,
+      },
+    });
+
+    if (!position) return null;
+
+    return PrismaPositionDetailsMapper.toDomain(position);
   }
 
   async fetchByEmployerId(id: string): Promise<Position[]> {

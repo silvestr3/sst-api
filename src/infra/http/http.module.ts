@@ -65,6 +65,8 @@ import { GetDepartmentDetailsController } from './controllers/get-department-det
 import { GetDepartmentDetailsUseCase } from '@/domain/registrations/application/use-cases/get-department-details';
 import { GetBranchDetailsController } from './controllers/get-branch-details.controller';
 import { GetBranchDetailsUseCase } from '@/domain/registrations/application/use-cases/get-branch-details';
+import { GetPositionDetailsController } from './controllers/get-position-details.controller';
+import { GetPositionDetailsUseCase } from '@/domain/registrations/application/use-cases/get-position-details';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -101,6 +103,7 @@ import { GetBranchDetailsUseCase } from '@/domain/registrations/application/use-
     GetEmployerDetailsUseCase,
     GetDepartmentDetailsUseCase,
     GetBranchDetailsUseCase,
+    GetPositionDetailsUseCase,
   ],
   controllers: [
     // ACCOUNTS
@@ -139,6 +142,7 @@ import { GetBranchDetailsUseCase } from '@/domain/registrations/application/use-
     EditBranchController,
 
     // POSITIONS
+    GetPositionDetailsController,
     EditPositionController,
 
     // EMPLOYEES
