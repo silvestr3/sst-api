@@ -1,22 +1,23 @@
 import { FakeSubscriptionsRepository } from 'test/repositories/fake-subscriptions-repository';
 import { makeSubscription } from 'test/factories/make-subscription';
-import { FakeDepartmentsRepository } from 'test/repositories/fake-departments-repository';
-import { makeDepartment } from 'test/factories/make-department';
+import { FakeBranchesRepository } from 'test/repositories/fake-branches-repository';
+import { makeBranch } from 'test/factories/make-branch';
 import { FakeAddressesRepository } from 'test/repositories/fake-addresses-repository';
 import { FakeDoctorsRepository } from 'test/repositories/fake-doctors-repository';
-import { GetDepartmentDetailsUseCase } from '../get-department-details';
+import { GetBranchDetailsUseCase } from '../get-branch-details';
 import { FakeEmployersRepository } from 'test/repositories/fake-employers-repository';
 import { makeEmployer } from 'test/factories/make-employer';
+import { makeAddress } from 'test/factories/make-address';
 
-describe('get department details tests', () => {
-  let sut: GetDepartmentDetailsUseCase;
+describe('get branch details tests', () => {
+  let sut: GetBranchDetailsUseCase;
 
   let subscriptionsRepository: FakeSubscriptionsRepository;
 
   let addressesRepository: FakeAddressesRepository;
   let doctorsRepository: FakeDoctorsRepository;
 
-  let departmentsRepository: FakeDepartmentsRepository;
+  let branchesRepository: FakeBranchesRepository;
   let employersRepository: FakeEmployersRepository;
 
   beforeEach(() => {
@@ -30,15 +31,18 @@ describe('get department details tests', () => {
       doctorsRepository,
     );
 
-    departmentsRepository = new FakeDepartmentsRepository(employersRepository);
+    branchesRepository = new FakeBranchesRepository(
+      addressesRepository,
+      employersRepository,
+    );
 
-    sut = new GetDepartmentDetailsUseCase(
+    sut = new GetBranchDetailsUseCase(
       subscriptionsRepository,
-      departmentsRepository,
+      branchesRepository,
     );
   });
 
-  it('Should be able to find one department with details', async () => {
+  it('Should be able to find one branch with details', async () => {
     const subscription = makeSubscription();
     subscriptionsRepository.items.push(subscription);
 
@@ -47,27 +51,36 @@ describe('get department details tests', () => {
     });
     employersRepository.items.push(employer);
 
-    const department = makeDepartment({
+    const address = makeAddress({
+      subscriptionId: subscription.id,
+    });
+    addressesRepository.items.push(address);
+
+    const branch = makeBranch({
       subscriptionId: subscription.id,
       employerId: employer.id,
+      addressId: address.id,
     });
-    departmentsRepository.items.push(department);
+    branchesRepository.items.push(branch);
 
     const result = await sut.execute({
       subscriptionId: subscription.id.toString(),
       executorId: subscription.administratorId.toString(),
-      departmentId: department.id.toString(),
+      branchId: branch.id.toString(),
     });
 
     expect(result.isRight()).toBeTruthy();
 
     expect(result.value).toEqual(
       expect.objectContaining({
-        department: expect.objectContaining({
+        branch: expect.objectContaining({
           props: expect.objectContaining({
-            departmentId: department.id,
+            branchId: branch.id,
             employer: expect.objectContaining({
               employerId: employer.id,
+            }),
+            address: expect.objectContaining({
+              addressId: address.id,
             }),
           }),
         }),
