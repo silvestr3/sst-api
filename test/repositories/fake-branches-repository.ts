@@ -34,6 +34,8 @@ export class FakeBranchesRepository implements BranchesRepository {
 
     const branch = this.items.find((item) => item.id.toString() === id);
 
+    if (!branch) return null;
+
     const employer = this.employersRepository.items.find((item) =>
       item.id.equals(branch.employerId),
     );

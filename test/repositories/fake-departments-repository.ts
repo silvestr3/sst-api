@@ -34,6 +34,9 @@ export class FakeDepartmentsRepository implements DepartmentesRepository {
 
   async findByIdWithDetails(id: string): Promise<DepartmentWithDetails | null> {
     const department = this.items.find((item) => item.id.toString() === id);
+
+    if (!department) return null;
+
     const employer = this.employersRepository.items.find((item) =>
       item.id.equals(department.employerId),
     );
