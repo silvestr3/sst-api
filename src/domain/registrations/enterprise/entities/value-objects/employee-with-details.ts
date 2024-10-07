@@ -45,6 +45,14 @@ export class EmployeeWithDetails extends ValueObject<EmployeeWithDetailsProps> {
     return this.props.subscriptionId;
   }
 
+  get employeeId() {
+    return this.props.employeeId;
+  }
+
+  set employeeId(employeeId: UniqueEntityID) {
+    this.props.employeeId = employeeId;
+  }
+
   get employer() {
     return this.props.employer;
   }

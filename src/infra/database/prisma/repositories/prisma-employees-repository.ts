@@ -3,10 +3,13 @@ import { Employee } from '@/domain/registrations/enterprise/entities/employee';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaEmployeeMapper } from '../mappers/prisma-employee-mapper';
+import { EmployeeWithDetails } from '@/domain/registrations/enterprise/entities/value-objects/employee-with-details';
+import { PrismaEmployeeDetailsMapper } from '../mappers/prisma-employee-details-mapper';
 
 @Injectable()
 export class PrismaEmployeesRepository implements EmployeesRepository {
   constructor(private prisma: PrismaService) {}
+
   async create(employee: Employee): Promise<void> {
     const data = PrismaEmployeeMapper.toPrisma(employee);
 
@@ -34,6 +37,24 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
     if (!employee) return null;
 
     return PrismaEmployeeMapper.toDomain(employee);
+  }
+
+  async findByIdWithDetails(id: string): Promise<EmployeeWithDetails | null> {
+    const employee = await this.prisma.employee.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        employer: true,
+        branch: true,
+        department: true,
+        position: true,
+      },
+    });
+
+    if (!employee) return null;
+
+    return PrismaEmployeeDetailsMapper.toDomain(employee);
   }
 
   async fetchByEmployerId(employerId: string): Promise<Employee[]> {
