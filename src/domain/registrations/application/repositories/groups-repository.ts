@@ -7,4 +7,8 @@ export abstract class GroupsRepository extends Repository<Group> {
   abstract delete(group: Group): Promise<void>;
   abstract findAll(subscriptionId: string): Promise<Group[]>;
   abstract findById(id: string): Promise<Group | null>;
+  abstract searchByName(
+    subscriptionId: string,
+    searchTerm: string,
+  ): Promise<Group[]>;
 }

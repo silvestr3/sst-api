@@ -33,4 +33,17 @@ export class FakeGroupsRepository implements GroupsRepository {
 
     this.items[index] = group;
   }
+
+  async searchByName(
+    subscriptionId: string,
+    searchTerm: string,
+  ): Promise<Group[]> {
+    const groups = this.items.filter(
+      (item) =>
+        item.subscriptionId.toString() === subscriptionId &&
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    return groups;
+  }
 }
