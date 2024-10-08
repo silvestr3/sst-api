@@ -51,7 +51,7 @@ describe('Get department details (e2e)', () => {
     await app.init();
   });
 
-  test('[GET] /departments/:departmentId', async () => {
+  test('[GET] /departments/:departmentId/details', async () => {
     const { administrator, subscription } =
       await administratorFactory.makePrismaAdministrator();
 
@@ -80,7 +80,7 @@ describe('Get department details (e2e)', () => {
     const departmentId = department.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get(`/departments/${departmentId}`)
+      .get(`/departments/${departmentId}/details`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 

@@ -23,7 +23,7 @@ import { GetPositionDetailsUseCase } from '@/domain/registrations/application/us
 import { GetPositionDetailsResponse } from '../dto/get-position-details.dto';
 import { PositionDetailsPresenter } from '../presenters/position-details-presenter';
 
-@Controller('/positions/:positionId')
+@Controller('/positions/:positionId/details')
 export class GetPositionDetailsController {
   constructor(private getPositionDetails: GetPositionDetailsUseCase) {}
 

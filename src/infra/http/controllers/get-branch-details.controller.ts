@@ -23,7 +23,7 @@ import { GetBranchDetailsUseCase } from '@/domain/registrations/application/use-
 import { GetBranchDetailsResponse } from '../dto/get-branch-details.dto';
 import { BranchDetailsPresenter } from '../presenters/branch-details-presenter';
 
-@Controller('/branches/:branchId')
+@Controller('/branches/:branchId/details')
 export class GetBranchDetailsController {
   constructor(private getBranchDetails: GetBranchDetailsUseCase) {}
 

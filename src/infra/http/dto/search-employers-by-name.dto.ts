@@ -13,7 +13,7 @@ export class SearchEmployersByNameQueryParamsDTO {
   @IsString()
   q: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsUUID()
   @IsOptional()
   groupId: UUID;

@@ -23,7 +23,7 @@ import { GetEmployeeDetailsUseCase } from '@/domain/registrations/application/us
 import { GetEmployeeDetailsResponse } from '../dto/get-employee-details.dto';
 import { EmployeeDetailsPresenter } from '../presenters/employee-details-presenter';
 
-@Controller('/employees/:employeeId')
+@Controller('/employees/:employeeId/details')
 export class GetEmployeeDetailsController {
   constructor(private getEmployeeDetails: GetEmployeeDetailsUseCase) {}
 

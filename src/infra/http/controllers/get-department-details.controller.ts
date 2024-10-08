@@ -23,7 +23,7 @@ import { GetDepartmentDetailsUseCase } from '@/domain/registrations/application/
 import { GetDepartmentDetailsResponse } from '../dto/get-department-details.dto';
 import { DepartmentDetailsPresenter } from '../presenters/department-details-presenter';
 
-@Controller('/departments/:departmentId')
+@Controller('/departments/:departmentId/details')
 export class GetDepartmentDetailsController {
   constructor(private getDepartmentDetails: GetDepartmentDetailsUseCase) {}
 

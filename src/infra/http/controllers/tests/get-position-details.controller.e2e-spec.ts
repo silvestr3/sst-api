@@ -8,8 +8,6 @@ import request from 'supertest';
 import { AdministratorFactory } from 'test/factories/make-administrator';
 import { PositionFactory } from 'test/factories/make-position';
 import { GroupFactory } from 'test/factories/make-group';
-import { AddressFactory } from 'test/factories/make-address';
-import { DoctorFactory } from 'test/factories/make-doctor';
 import { EmployerFactory } from 'test/factories/make-employer';
 
 describe('Get position details (e2e)', () => {
@@ -20,8 +18,6 @@ describe('Get position details (e2e)', () => {
   let administratorFactory: AdministratorFactory;
   let groupFactory: GroupFactory;
   let positionFactory: PositionFactory;
-  let addressFactory: AddressFactory;
-  let doctorFactory: DoctorFactory;
   let employerFactory: EmployerFactory;
 
   beforeAll(async () => {
@@ -32,8 +28,6 @@ describe('Get position details (e2e)', () => {
         PrismaService,
         GroupFactory,
         PositionFactory,
-        AddressFactory,
-        DoctorFactory,
         EmployerFactory,
       ],
     }).compile();
@@ -44,14 +38,12 @@ describe('Get position details (e2e)', () => {
     administratorFactory = app.get(AdministratorFactory);
     groupFactory = app.get(GroupFactory);
     positionFactory = app.get(PositionFactory);
-    addressFactory = app.get(AddressFactory);
-    doctorFactory = app.get(DoctorFactory);
     employerFactory = app.get(EmployerFactory);
 
     await app.init();
   });
 
-  test('[GET] /positions/:positionId', async () => {
+  test('[GET] /positions/:positionId/details', async () => {
     const { administrator, subscription } =
       await administratorFactory.makePrismaAdministrator();
 
@@ -80,7 +72,7 @@ describe('Get position details (e2e)', () => {
     const positionId = position.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get(`/positions/${positionId}`)
+      .get(`/positions/${positionId}/details`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 

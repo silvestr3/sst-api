@@ -51,7 +51,7 @@ describe('Get branch details (e2e)', () => {
     await app.init();
   });
 
-  test('[GET] /branches/:branchId', async () => {
+  test('[GET] /branches/:branchId/details', async () => {
     const { administrator, subscription } =
       await administratorFactory.makePrismaAdministrator();
 
@@ -85,7 +85,7 @@ describe('Get branch details (e2e)', () => {
     const branchId = branch.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get(`/branches/${branchId}`)
+      .get(`/branches/${branchId}/details`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
