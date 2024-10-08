@@ -9,6 +9,7 @@ import { PrismaEmployerWithDetailsMapper } from '../mappers/prisma-employer-deta
 @Injectable()
 export class PrismaEmployersRepository implements EmployersRepository {
   constructor(private prisma: PrismaService) {}
+
   async create(employer: Employer): Promise<void> {
     const data = PrismaEmployerMapper.toPrisma(employer);
 
@@ -47,7 +48,7 @@ export class PrismaEmployersRepository implements EmployersRepository {
       },
     });
 
-    return employers.map((employer) => PrismaEmployerMapper.toDomain(employer));
+    return employers.map(PrismaEmployerMapper.toDomain);
   }
 
   async findByIdWithDetails(id: string): Promise<EmployerWithDetails | null> {
@@ -64,5 +65,34 @@ export class PrismaEmployersRepository implements EmployersRepository {
     if (!employer) return null;
 
     return PrismaEmployerWithDetailsMapper.toDomain(employer);
+  }
+
+  async searchByName(
+    subscriptionId: string,
+    searchTerm: string,
+    groupId?: string,
+  ): Promise<Employer[]> {
+    const employers = groupId
+      ? await this.prisma.employer.findMany({
+          where: {
+            subscriptionId,
+            groupId,
+            nomeFantasia: {
+              contains: searchTerm,
+              mode: 'insensitive',
+            },
+          },
+        })
+      : await this.prisma.employer.findMany({
+          where: {
+            subscriptionId,
+            nomeFantasia: {
+              contains: searchTerm,
+              mode: 'insensitive',
+            },
+          },
+        });
+
+    return employers.map(PrismaEmployerMapper.toDomain);
   }
 }

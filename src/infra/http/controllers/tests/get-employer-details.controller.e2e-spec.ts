@@ -47,7 +47,7 @@ describe('Get employer details (e2e)', () => {
     await app.init();
   });
 
-  test('[GET] /employers/:employerId', async () => {
+  test('[GET] /employers/:employerId/details', async () => {
     const { administrator, subscription } =
       await administratorFactory.makePrismaAdministrator();
 
@@ -80,7 +80,7 @@ describe('Get employer details (e2e)', () => {
     const employerId = employer.id.toString();
 
     const response = await request(app.getHttpServer())
-      .get(`/employers/${employerId}`)
+      .get(`/employers/${employerId}/details`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 

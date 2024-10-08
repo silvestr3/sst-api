@@ -71,6 +71,8 @@ import { GetEmployeeDetailsController } from './controllers/get-employee-details
 import { GetEmployeeDetailsUseCase } from '@/domain/registrations/application/use-cases/get-employee-details';
 import { SearchGroupsByNameController } from './controllers/search-group-by-name.controller';
 import { SearchGroupsByNameUseCase } from '@/domain/registrations/application/use-cases/search-group-by-name';
+import { SearchEmployersByNameController } from './controllers/search-employer-by-name.controller';
+import { SearchEmployersByNameUseCase } from '@/domain/registrations/application/use-cases/search-employer-by-name';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -110,6 +112,7 @@ import { SearchGroupsByNameUseCase } from '@/domain/registrations/application/us
     GetPositionDetailsUseCase,
     GetEmployeeDetailsUseCase,
     SearchGroupsByNameUseCase,
+    SearchEmployersByNameUseCase,
   ],
   controllers: [
     // ACCOUNTS
@@ -126,6 +129,7 @@ import { SearchGroupsByNameUseCase } from '@/domain/registrations/application/us
 
     // EMPLOYERS
     GetEmployerDetailsController,
+    SearchEmployersByNameController,
     CreateEmployerController,
     InactivateEmployerController,
     LinkAddressToEmployerController,
