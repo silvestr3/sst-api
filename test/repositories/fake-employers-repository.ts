@@ -93,4 +93,26 @@ export class FakeEmployersRepository implements EmployersRepository {
         : null,
     });
   }
+
+  async searchByName(
+    subscriptionId: string,
+    searchTerm: string,
+    groupId?: string,
+  ): Promise<Employer[]> {
+    const employers = this.items
+      .filter((item) => {
+        return (
+          item.subscriptionId.toString() === subscriptionId &&
+          item.nomeFantasia.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      })
+      .filter((item) => {
+        if (groupId) {
+          return item.groupId.toString() === groupId;
+        }
+        return item;
+      });
+
+    return employers;
+  }
 }
