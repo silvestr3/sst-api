@@ -56,4 +56,21 @@ export class PrismaGroupsRepository implements GroupsRepository {
 
     return PrismaGroupMapper.toDomain(group);
   }
+
+  async searchByName(
+    subscriptionId: string,
+    searchTerm: string,
+  ): Promise<Group[]> {
+    const groups = await this.prisma.group.findMany({
+      where: {
+        subscriptionId,
+        name: {
+          contains: searchTerm,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return groups.map((group) => PrismaGroupMapper.toDomain(group));
+  }
 }
