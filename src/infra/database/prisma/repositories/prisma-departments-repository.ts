@@ -65,4 +65,23 @@ export class PrismaDepartmentsRepository implements DepartmentsRepository {
 
     return PrismaDepartmentDetailsMapper.toDomain(department);
   }
+
+  async searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Department[]> {
+    const deparments = await this.prisma.department.findMany({
+      where: {
+        subscriptionId,
+        employerId,
+        name: {
+          contains: searchTerm,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return deparments.map(PrismaDepartmentMapper.toDomain);
+  }
 }

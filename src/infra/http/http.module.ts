@@ -75,6 +75,8 @@ import { SearchEmployersByNameController } from './controllers/search-employer-b
 import { SearchEmployersByNameUseCase } from '@/domain/registrations/application/use-cases/search-employer-by-name';
 import { SearchBranchesByNameController } from './controllers/search-branch-by-name.controller';
 import { SearchBranchesByNameUseCase } from '@/domain/registrations/application/use-cases/search-branch-by-name';
+import { SearchDepartmentsByNameController } from './controllers/search-department-by-name.controller';
+import { SearchDepartmentsByNameUseCase } from '@/domain/registrations/application/use-cases/search-department-by-name';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -116,6 +118,7 @@ import { SearchBranchesByNameUseCase } from '@/domain/registrations/application/
     SearchGroupsByNameUseCase,
     SearchEmployersByNameUseCase,
     SearchBranchesByNameUseCase,
+    SearchDepartmentsByNameUseCase,
   ],
   controllers: [
     // ACCOUNTS
@@ -148,6 +151,7 @@ import { SearchBranchesByNameUseCase } from '@/domain/registrations/application/
 
     // DEPARTMENTS
     GetDepartmentDetailsController,
+    SearchDepartmentsByNameController,
     EditDepartmentController,
 
     // BRANCHES
