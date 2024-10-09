@@ -1,9 +1,9 @@
-import { DepartmentesRepository } from '@/domain/registrations/application/repositories/departments-repository';
+import { DepartmentsRepository } from '@/domain/registrations/application/repositories/departments-repository';
 import { Department } from '@/domain/registrations/enterprise/entities/department';
 import { DepartmentWithDetails } from '@/domain/registrations/enterprise/entities/value-objects/department-with-details';
 import { FakeEmployersRepository } from './fake-employers-repository';
 
-export class FakeDepartmentsRepository implements DepartmentesRepository {
+export class FakeDepartmentsRepository implements DepartmentsRepository {
   constructor(private employersRepository: FakeEmployersRepository) {}
 
   public items: Department[] = [];
@@ -52,5 +52,20 @@ export class FakeDepartmentsRepository implements DepartmentesRepository {
         razaoSocial: employer.nomeFantasia,
       },
     });
+  }
+
+  async searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Department[]> {
+    const departments = this.items.filter(
+      (item) =>
+        item.subscriptionId.toString() === subscriptionId &&
+        item.employerId.toString() === employerId &&
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    return departments;
   }
 }

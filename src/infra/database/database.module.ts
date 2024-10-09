@@ -8,7 +8,7 @@ import { AddressesRepository } from '@/domain/registrations/application/reposito
 import { PrismaAddressesRepository } from './prisma/repositories/prisma-addresses-repository';
 import { BranchesRepository } from '@/domain/registrations/application/repositories/branches-repository';
 import { PrismaBranchesRepository } from './prisma/repositories/prisma-branches-repository';
-import { DepartmentesRepository } from '@/domain/registrations/application/repositories/departments-repository';
+import { DepartmentsRepository } from '@/domain/registrations/application/repositories/departments-repository';
 import { PrismaDepartmentsRepository } from './prisma/repositories/prisma-departments-repository';
 import { DoctorsRepository } from '@/domain/registrations/application/repositories/doctors-repository';
 import { PrismaDoctorsRepository } from './prisma/repositories/prisma-doctors-repository';
@@ -41,7 +41,7 @@ import { PrismaPositionsRepository } from './prisma/repositories/prisma-position
       useClass: PrismaBranchesRepository,
     },
     {
-      provide: DepartmentesRepository,
+      provide: DepartmentsRepository,
       useClass: PrismaDepartmentsRepository,
     },
     {
@@ -71,7 +71,7 @@ import { PrismaPositionsRepository } from './prisma/repositories/prisma-position
     SubscriptionsRepository,
     AddressesRepository,
     BranchesRepository,
-    DepartmentesRepository,
+    DepartmentsRepository,
     DoctorsRepository,
     EmployeesRepository,
     EmployersRepository,

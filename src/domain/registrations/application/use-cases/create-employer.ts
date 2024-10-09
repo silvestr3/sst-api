@@ -9,7 +9,7 @@ import { MissingInformationError } from './errors/missing-information-error';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Branch } from '../../enterprise/entities/branch';
 import { BranchesRepository } from '../repositories/branches-repository';
-import { DepartmentesRepository } from '../repositories/departments-repository';
+import { DepartmentsRepository } from '../repositories/departments-repository';
 import { Department } from '../../enterprise/entities/department';
 import { Address } from '../../enterprise/entities/address';
 import { AddressesRepository } from '../repositories/addresses-repository';
@@ -51,7 +51,7 @@ export class CreateEmployerUseCase {
     private subscriptionsRepository: SubscriptionsRepository,
     private employersRepository: EmployersRepository,
     private branchesRepository: BranchesRepository,
-    private departmentsRepository: DepartmentesRepository,
+    private departmentsRepository: DepartmentsRepository,
     private addressesRepository: AddressesRepository,
   ) {}
 

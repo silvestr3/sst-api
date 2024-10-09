@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either';
 import { SubscriptionsRepository } from '../repositories/subscriptions-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
-import { DepartmentesRepository } from '../repositories/departments-repository';
+import { DepartmentsRepository } from '../repositories/departments-repository';
 import { Department } from '../../enterprise/entities/department';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
@@ -25,7 +25,7 @@ type EditDepartmentResponse = Either<
 export class EditDepartmentUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
-    private departmentsRepository: DepartmentesRepository,
+    private departmentsRepository: DepartmentsRepository,
   ) {}
 
   async execute({

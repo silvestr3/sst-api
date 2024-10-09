@@ -5,7 +5,7 @@ import { validateSubscription } from './util/validate-subscription';
 import { Injectable } from '@nestjs/common';
 import { DepartmentWithDetails } from '../../enterprise/entities/value-objects/department-with-details';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
-import { DepartmentesRepository } from '../repositories/departments-repository';
+import { DepartmentsRepository } from '../repositories/departments-repository';
 
 interface GetDepartmentDetailsParams {
   subscriptionId: string;
@@ -22,7 +22,7 @@ type GetDepartmentDetailsResponse = Either<
 export class GetDepartmentDetailsUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
-    private departmentsRepository: DepartmentesRepository,
+    private departmentsRepository: DepartmentsRepository,
   ) {}
 
   async execute({

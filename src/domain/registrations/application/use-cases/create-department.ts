@@ -2,7 +2,7 @@ import { Either, left, right } from '@/core/either';
 import { SubscriptionsRepository } from '../repositories/subscriptions-repository';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { EmployersRepository } from '../repositories/employers-repository';
-import { DepartmentesRepository } from '../repositories/departments-repository';
+import { DepartmentsRepository } from '../repositories/departments-repository';
 import { Department } from '../../enterprise/entities/department';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { validateSubscription } from './util/validate-subscription';
@@ -27,7 +27,7 @@ export class CreateDepartmentUseCase {
   constructor(
     private subscriptionsRepository: SubscriptionsRepository,
     private employersRepository: EmployersRepository,
-    private departmentsRepository: DepartmentesRepository,
+    private departmentsRepository: DepartmentsRepository,
   ) {}
 
   async execute({

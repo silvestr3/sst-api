@@ -9,7 +9,7 @@ import { Group } from '../../enterprise/entities/group';
 import { GroupsRepository } from '../repositories/groups-repository';
 import { EmployersRepository } from '../repositories/employers-repository';
 import { BranchesRepository } from '../repositories/branches-repository';
-import { DepartmentesRepository } from '../repositories/departments-repository';
+import { DepartmentsRepository } from '../repositories/departments-repository';
 import { PositionsRepository } from '../repositories/positions-repository';
 import { EmployeesRepository } from '../repositories/employees-repository';
 import { Employer } from '../../enterprise/entities/employer';
@@ -56,7 +56,7 @@ export class CreateEmployeeUseCase {
     private groupsRepository: GroupsRepository,
     private employersRepository: EmployersRepository,
     private branchesRepository: BranchesRepository,
-    private departmentsRepository: DepartmentesRepository,
+    private departmentsRepository: DepartmentsRepository,
     private positionsRepository: PositionsRepository,
     private employeesRepository: EmployeesRepository,
   ) {}

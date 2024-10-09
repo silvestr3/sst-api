@@ -1,4 +1,4 @@
-import { DepartmentesRepository } from '@/domain/registrations/application/repositories/departments-repository';
+import { DepartmentsRepository } from '@/domain/registrations/application/repositories/departments-repository';
 import { Department } from '@/domain/registrations/enterprise/entities/department';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
@@ -7,7 +7,7 @@ import { DepartmentWithDetails } from '@/domain/registrations/enterprise/entitie
 import { PrismaDepartmentDetailsMapper } from '../mappers/prisma-department-details-mapper';
 
 @Injectable()
-export class PrismaDepartmentsRepository implements DepartmentesRepository {
+export class PrismaDepartmentsRepository implements DepartmentsRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(department: Department): Promise<void> {
