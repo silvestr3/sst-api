@@ -81,6 +81,8 @@ import { SearchPositionsByNameController } from './controllers/search-positions-
 import { SearchPositionsByNameUseCase } from '@/domain/registrations/application/use-cases/search-positions-by-name';
 import { SearchDoctorsByNameController } from './controllers/search-doctors-by-name.controller';
 import { SearchDoctorsByNameUseCase } from '@/domain/registrations/application/use-cases/search-doctors-by-name';
+import { SearchEmployeesByNameController } from './controllers/search-employees-by-name.controller';
+import { SearchEmployeesByNameUseCase } from '@/domain/registrations/application/use-cases/search-employees-by-name';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -125,6 +127,7 @@ import { SearchDoctorsByNameUseCase } from '@/domain/registrations/application/u
     SearchDepartmentsByNameUseCase,
     SearchPositionsByNameUseCase,
     SearchDoctorsByNameUseCase,
+    SearchEmployeesByNameUseCase,
   ],
   controllers: [
     // ACCOUNTS
@@ -173,6 +176,7 @@ import { SearchDoctorsByNameUseCase } from '@/domain/registrations/application/u
 
     // EMPLOYEES
     GetEmployeeDetailsController,
+    SearchEmployeesByNameController,
     EditEmployeeController,
 
     // DOCTORS

@@ -66,4 +66,23 @@ export class PrismaEmployeesRepository implements EmployeesRepository {
 
     return employees.map(PrismaEmployeeMapper.toDomain);
   }
+
+  async searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Employee[]> {
+    const employees = await this.prisma.employee.findMany({
+      where: {
+        subscriptionId,
+        employerId,
+        name: {
+          contains: searchTerm,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return employees.map(PrismaEmployeeMapper.toDomain);
+  }
 }
