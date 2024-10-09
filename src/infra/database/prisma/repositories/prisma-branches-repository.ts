@@ -64,6 +64,25 @@ export class PrismaBranchesRepository implements BranchesRepository {
       },
     });
 
-    return branches.map((branch) => PrismaBranchMapper.toDomain(branch));
+    return branches.map(PrismaBranchMapper.toDomain);
+  }
+
+  async searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Branch[]> {
+    const branches = await this.prisma.branch.findMany({
+      where: {
+        subscriptionId,
+        employerId,
+        name: {
+          contains: searchTerm,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return branches.map(PrismaBranchMapper.toDomain);
   }
 }
