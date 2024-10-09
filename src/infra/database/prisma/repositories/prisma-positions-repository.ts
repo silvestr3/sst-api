@@ -61,6 +61,25 @@ export class PrismaPositionsRepository implements PositionsRepository {
       },
     });
 
-    return positions.map((position) => PrismaPositionMapper.toDomain(position));
+    return positions.map(PrismaPositionMapper.toDomain);
+  }
+
+  async searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Position[]> {
+    const positions = await this.prisma.position.findMany({
+      where: {
+        subscriptionId,
+        employerId,
+        name: {
+          contains: searchTerm,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return positions.map(PrismaPositionMapper.toDomain);
   }
 }

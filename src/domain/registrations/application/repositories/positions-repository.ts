@@ -8,4 +8,9 @@ export abstract class PositionsRepository extends Repository<Position> {
   abstract findById(id: string): Promise<Position | null>;
   abstract findByIdWithDetails(id: string): Promise<PositionWithDetails | null>;
   abstract fetchByEmployerId(id: string): Promise<Position[]>;
+  abstract searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Position[]>;
 }

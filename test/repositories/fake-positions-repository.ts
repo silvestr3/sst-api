@@ -54,4 +54,19 @@ export class FakePositionsRepository implements PositionsRepository {
 
     return positions;
   }
+
+  async searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Position[]> {
+    const positions = this.items.filter(
+      (item) =>
+        item.subscriptionId.toString() === subscriptionId &&
+        item.employerId.toString() === employerId &&
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    return positions;
+  }
 }
