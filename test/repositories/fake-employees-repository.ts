@@ -96,4 +96,19 @@ export class FakeEmployeesRepository implements EmployeesRepository {
 
     return employees;
   }
+
+  async searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Employee[]> {
+    const employees = this.items.filter(
+      (item) =>
+        item.subscriptionId.toString() === subscriptionId &&
+        item.employerId.toString() === employerId &&
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    return employees;
+  }
 }

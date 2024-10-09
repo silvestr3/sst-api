@@ -8,4 +8,9 @@ export abstract class EmployeesRepository extends Repository<Employee> {
   abstract findById(id: string): Promise<Employee | null>;
   abstract findByIdWithDetails(id: string): Promise<EmployeeWithDetails | null>;
   abstract fetchByEmployerId(employerId: string): Promise<Employee[]>;
+  abstract searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Employee[]>;
 }
