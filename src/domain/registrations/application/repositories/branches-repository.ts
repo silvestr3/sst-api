@@ -8,4 +8,9 @@ export abstract class BranchesRepository extends Repository<Branch> {
   abstract findById(id: string): Promise<Branch | null>;
   abstract findByIdWithDetails(id: string): Promise<BranchWithDetails | null>;
   abstract fetchByEmployerId(id: string): Promise<Branch[]>;
+  abstract searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Branch[]>;
 }

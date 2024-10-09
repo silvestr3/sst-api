@@ -77,4 +77,19 @@ export class FakeBranchesRepository implements BranchesRepository {
 
     return branches;
   }
+
+  async searchByName(
+    subscriptionId: string,
+    employerId: string,
+    searchTerm: string,
+  ): Promise<Branch[]> {
+    const branches = this.items.filter(
+      (item) =>
+        item.subscriptionId.toString() === subscriptionId &&
+        item.employerId.toString() === employerId &&
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    return branches;
+  }
 }
