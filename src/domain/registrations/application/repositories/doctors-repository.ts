@@ -6,4 +6,8 @@ export abstract class DoctorsRepository extends Repository<Doctor> {
   abstract findAll(subscriptionId: string): Promise<Doctor[]>;
   abstract create(doctor: Doctor): Promise<void>;
   abstract save(doctor: Doctor): Promise<void>;
+  abstract searchByName(
+    subscriptionId: string,
+    searchTerm: string,
+  ): Promise<Doctor[]>;
 }

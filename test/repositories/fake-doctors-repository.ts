@@ -27,4 +27,17 @@ export class FakeDoctorsRepository implements DoctorsRepository {
 
     return doctors;
   }
+
+  async searchByName(
+    subscriptionId: string,
+    searchTerm: string,
+  ): Promise<Doctor[]> {
+    const doctors = this.items.filter(
+      (item) =>
+        item.subscriptionId.toString() === subscriptionId &&
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    return doctors;
+  }
 }

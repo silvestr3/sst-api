@@ -47,4 +47,21 @@ export class PrismaDoctorsRepository implements DoctorsRepository {
 
     return doctors.map(PrismaDoctorMapper.toDomain);
   }
+
+  async searchByName(
+    subscriptionId: string,
+    searchTerm: string,
+  ): Promise<Doctor[]> {
+    const doctors = await this.prisma.doctor.findMany({
+      where: {
+        subscriptionId,
+        name: {
+          contains: searchTerm,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return doctors.map((doctor) => PrismaDoctorMapper.toDomain(doctor));
+  }
 }
