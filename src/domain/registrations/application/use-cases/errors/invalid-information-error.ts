@@ -1,5 +1,5 @@
 export class InvalidInformationError extends Error {
   constructor(data: string) {
-    super(`Provided ${data} is not valid`);
+    super(`${data} fornecido é inválido`);
   }
 }
