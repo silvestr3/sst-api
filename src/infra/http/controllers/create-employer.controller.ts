@@ -17,11 +17,15 @@ import {
 import { CurrentUser } from '@/infra/auth/current-user.decorator';
 import { UserPayload } from '@/infra/auth/jwt-strategy';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
-import { CreateEmployerDTO } from '../dto/create-employer.dto';
+import {
+  CreateEmployerDTO,
+  CreateEmployerResponseDTO,
+} from '../dto/create-employer.dto';
 import { CreateEmployerUseCase } from '@/domain/registrations/application/use-cases/create-employer';
 import { MissingInformationError } from '@/domain/registrations/application/use-cases/errors/missing-information-error';
 import { InvalidInformationError } from '@/domain/registrations/application/use-cases/errors/invalid-information-error';
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { EmployerPresenter } from '../presenters/employer-presenter';
 
 @Controller('/employers')
 export class CreateEmployerController {
@@ -29,7 +33,10 @@ export class CreateEmployerController {
 
   @ApiTags('Employers')
   @ApiBearerAuth()
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({
+    type: CreateEmployerResponseDTO,
+    description: 'New employer',
+  })
   @ApiUnauthorizedResponse({
     description: 'User not authorized to perform this action',
   })
@@ -90,5 +97,9 @@ export class CreateEmployerController {
           throw new BadRequestException();
       }
     }
+
+    const { employer } = result.value;
+
+    return { employer: EmployerPresenter.toHttp(employer) };
   }
 }

@@ -9,6 +9,7 @@ import {
   Max,
   Min,
 } from 'class-validator';
+import { EmployerObject } from './fetch-employers-by-group-id.dto';
 
 enum eSocialEnrollmentTypeValues {
   CPF = 'CPF',
@@ -70,4 +71,9 @@ export class CreateEmployerDTO {
   @IsOptional()
   @IsString()
   addressId: string;
+}
+
+export class CreateEmployerResponseDTO {
+  @ApiProperty({ type: EmployerObject })
+  employer: EmployerObject;
 }

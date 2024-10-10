@@ -13,10 +13,14 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { CreateGroupDTO } from '../dto/create-group.dto';
+import {
+  CreateGroupDTO,
+  CreateGroupResponseDTO,
+} from '../dto/create-group.dto';
 import { CurrentUser } from '@/infra/auth/current-user.decorator';
 import { UserPayload } from '@/infra/auth/jwt-strategy';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { GroupPresenter } from '../presenters/group-presenter';
 
 @Controller('/groups')
 export class CreateGroupController {
@@ -24,7 +28,10 @@ export class CreateGroupController {
 
   @ApiTags('Groups')
   @ApiBearerAuth()
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({
+    type: CreateGroupResponseDTO,
+    description: 'New group',
+  })
   @ApiUnauthorizedResponse({
     description: 'User not authorized to perform this action',
   })
@@ -54,5 +61,9 @@ export class CreateGroupController {
           throw new BadRequestException();
       }
     }
+
+    const { group } = result.value;
+
+    return { group: GroupPresenter.toHttp(group) };
   }
 }

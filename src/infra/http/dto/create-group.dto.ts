@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsBoolean } from 'class-validator';
+import { GroupObject } from './fetch-all-groups.dto';
 
 export class CreateGroupDTO {
   @ApiProperty()
@@ -14,4 +15,9 @@ export class CreateGroupDTO {
   @IsBoolean()
   @IsOptional()
   isActive: boolean;
+}
+
+export class CreateGroupResponseDTO {
+  @ApiProperty({ type: GroupObject })
+  group: GroupObject;
 }
